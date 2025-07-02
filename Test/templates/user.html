@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block title %}
+    User Information
+{% endblock %}
+
+{% block content %}
+	<h1> User Info :</h1>
+	<a href="{% url 'delete' user.id %}"><button style="background-color: red; color: white; cursor:progress;">Delete</button></a>
+	<a href="{% url 'update' user.id %}"><button style="background-color: cyan; color: white; cursor:progress;">Update</button></a>
+	<hr>
+
+	<h3>FullName : {{ user.FullName }}</h3>
+	<h4>Email : {{ user.Email }}</h4>
+	<h4>ID : {{ user.id }}</h4>
+
+{% endblock %}
+	

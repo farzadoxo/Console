@@ -1,0 +1,14 @@
+{% extends 'base.html' %}
+
+{% block title%}
+	Home
+{% endblock %}
+{% block content %}
+	<h1>Welcome to System 👋</h1>
+	<a href="{% url 'create' %}"><button style="background-color: cyan; color: black; cursor: progress;">SignUp</button></a>
+	<hr>
+	<h2>Users :</h2>
+	{% for user in users %}
+		- <a href="{% url 'userinfo' user.id%}">{{ user.FullName }}</a> <br>
+	{% endfor %} 
+{% endblock %}
