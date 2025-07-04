@@ -45,12 +45,13 @@ def create_user(request):
 
 def update_user(request,user_id:int):
     user = User.objects.get(id=user_id)
-    if request.method == 'POST':
-        form = UpdateUserForm(request.POST)
+    if request.method == "POST":
+        form = UpdateUserForm(request.POST,instance=user)
         if form.is_valid():
             form.save()
-            return redirect(f'userinfo',user_id)
+
+            return redirect('userinfo' , user_id)
     else:
         form = UpdateUserForm(instance=user)
 
-    return render(request,'update.html',context={'form':form})
+    return render(request,"update.html",context={'form':form})
