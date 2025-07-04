@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    Create
+    Update
 {% endblock %}
 
 {% block content %}
@@ -10,6 +10,6 @@
         {% csrf_token %}
         {{ form.as_p }}
 
-        <input type="submit" name="Send" id="">
+        <input type="submit" name="Send" value="Update">
     </form>
 {% endblock %}
