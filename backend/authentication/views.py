@@ -20,7 +20,7 @@ class Auth:
         else:
             form= UserRegisterForm()
 
-        return render(request,'home.html',context={'form':form})
+        return render(request,'register.html',context={'form':form})
 
 
 
