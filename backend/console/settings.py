@@ -55,7 +55,7 @@ ROOT_URLCONF = 'console.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR / 'frontend' , TEMPLATES_DIR / 'frontend' / 'authentication'],
+        'DIRS': [TEMPLATES_DIR / 'frontend' , TEMPLATES_DIR / 'frontend' / 'authentication' , TEMPLATES_DIR / 'frontend' / 'base' , TEMPLATES_DIR / 'frontend' / 'home'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
