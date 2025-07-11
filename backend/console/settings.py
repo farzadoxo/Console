@@ -38,7 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'authentication',
-    'home'
+    'home',
+    'games'
 ]
 
 MIDDLEWARE = [
@@ -56,7 +57,11 @@ ROOT_URLCONF = 'console.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [TEMPLATES_DIR / 'frontend' ,TEMPLATES_DIR / 'frontend' / 'base', TEMPLATES_DIR / 'frontend' / 'authentication' , TEMPLATES_DIR / 'frontend' / 'home'],
+        'DIRS': [  TEMPLATES_DIR / 'frontend' 
+                 , TEMPLATES_DIR / 'frontend' / 'base'
+                 , TEMPLATES_DIR / 'frontend' / 'authentication' 
+                 , TEMPLATES_DIR / 'frontend' / 'home'
+                 , TEMPLATES_DIR / 'frontend' / 'games'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
