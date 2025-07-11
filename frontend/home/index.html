@@ -7,5 +7,15 @@
 {% block content %}
     <header>
         <h1 id="welcomer">Welcome to Console 🎮</h1>
+        <hr>
     </header>
+
+    <nav>
+        {% if request.user.is_authenticated %}
+            <a href="{% url 'logout' %}"><button style="color: red;">Logout</button></a>
+        {% else %}
+            <a href="{% url 'register' %}"><button style="color: orange;">Signup</button></a>
+            <a href="{% url 'login' %}"><button style="color: green;">Login</button></a>
+        {% endif %}      
+    </nav>
 {% endblock %}
