@@ -55,15 +55,12 @@ class Auth:
                     messages.error(request,'Your password or username is invalid !')
                     return redirect('home')
                 
-
         else:
             form = UserLoginForm()
         
-
         return render(request,'login.html',context={'form':form})
 
 
 
-
     def logout(request):
-        
+        ...
