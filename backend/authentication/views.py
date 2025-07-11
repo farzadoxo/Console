@@ -3,7 +3,9 @@ from django.contrib.auth.models import User
 from .forms import UserRegisterForm , UserLoginForm
 from django.contrib import messages
 from django.http import HttpResponse
-from django.contrib.auth import login , authenticate
+from django.contrib.auth import login , authenticate , logout
+
+
 
 class Auth:
 
@@ -63,4 +65,7 @@ class Auth:
 
 
     def logout(request):
-        ...
+        if request.user.is_authenticated:
+            logout(request)
+            messages.success(request,'User loged out successfully !')
+            return redirect('home')
