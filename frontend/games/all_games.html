@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    All Games
+{% endblock %}
+
+{% block content %}
+    {% for game in games %}
+        <a href="">{{ game.Title }}</a> <br>
+    {% endfor %}
+{% endblock %}
