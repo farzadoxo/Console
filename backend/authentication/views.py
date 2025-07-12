@@ -50,11 +50,11 @@ class Auth:
                 if user != None:
                     login(request,user)
 
-                    messages.success(request,f'Welcome dear {user.first_name}')
+                    messages.success(request,f"Welcome dear {user.first_name}")
 
                     return redirect('home')
                 else:
-                    messages.error(request,'Your password or username is invalid !')
+                    messages.error(request,"Your password or username is invalid !")
                     return redirect('home')
                 
         else:
@@ -68,4 +68,7 @@ class Auth:
         if request.user.is_authenticated:
             logout(request)
             messages.success(request,'User loged out successfully !')
+            return redirect('home')
+        else:
+            messages.error(request,"No one's loged in!")
             return redirect('home')
