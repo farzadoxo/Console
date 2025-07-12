@@ -6,6 +6,6 @@
 
 {% block content %}
     {% for game in games %}
-        <a href="">{{ game.Title }}</a> <br>
+        <a href="{% url 'game_info' game.id %}">{{ game.Title }}</a> <br>
     {% endfor %}
 {% endblock %}
