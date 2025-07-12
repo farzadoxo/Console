@@ -6,4 +6,4 @@ class Game(models.Model):
     PublishDate = models.DateTimeField()
     Genere = models.CharField(max_length=10)
     ESRB = models.CharField(max_length=1)
-    
+    IconUrl = models.CharField(max_length=100)
