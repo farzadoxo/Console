@@ -22,16 +22,16 @@ class Auth:
                     user.save()
                     
                     # Show message and return 
-                    messages.info(request,f"User {cd['UserName']} registered successfully!")
+                    messages.info(request,f"User {cd['UserName']} registered successfully!" , extra_tags='success')
                     return redirect('home')
                 
                 except Exception as e:
                     # Show ERROR and return
-                    messages.error(request , "{}".format(e))
+                    messages.error(request , "{}".format(e),extra_tags='error')
                     return redirect('register')
   
             else:
-                messages.error(request , "Form is not valid !")
+                messages.error(request , "Form is not valid !",extra_tags='warning')
                 return redirect('register')
         else:
             # Set request method to: GET
@@ -50,11 +50,11 @@ class Auth:
                 if user != None:
                     login(request,user)
 
-                    messages.success(request,f"Welcome dear {user.first_name}")
+                    messages.success(request,f"Welcome dear {user.first_name} {user.last_name}" , extra_tags='success')
 
                     return redirect('home')
                 else:
-                    messages.error(request,"Your password or username is invalid !")
+                    messages.error(request,"Your password or username is invalid !",extra_tags='error')
                     return redirect('home')
                 
         else:
@@ -67,8 +67,8 @@ class Auth:
     def logout(request):
         if request.user.is_authenticated:
             logout(request)
-            messages.success(request,'User loged out successfully !')
+            messages.success(request,'User loged out successfully !',extra_tags='success')
             return redirect('home')
         else:
-            messages.error(request,"No one's loged in!")
+            messages.error(request,"No one's loged in!",extra_tags='warning')
             return redirect('home')
