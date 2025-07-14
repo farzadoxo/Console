@@ -1,3 +1,4 @@
+
 {% extends 'base.html' %}
 
 {% block title %}
@@ -6,6 +7,16 @@
 
 {% block content %}
     {% for game in games %}
-        <a href="{% url 'game_info' game.id %}">{{ game.Title }}</a> <br>
+    <style>
+        .game_card{
+            width: 500px;
+            height: 500px;
+            border-radius: 50 solid red;
+            border-color: red;
+        }
+    </style>
+    <div class="game_card">
+        <h1>as</h1>
+    </div>
     {% endfor %}
 {% endblock %}
