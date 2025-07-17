@@ -7,16 +7,11 @@
 
 {% block content %}
     {% for game in games %}
-    <style>
-        .game_card{
-            width: 500px;
-            height: 500px;
-            border-radius: 50 solid red;
-            border-color: red;
-        }
-    </style>
-    <div class="game_card">
-        <h1>as</h1>
+    <div class="game_card" style="width: 300px; height: 350px; border: 3px; border-style: dashed; border-color:violet; display:inline-block;">
+        <p>{{ game.Title }}</p>
+        <p>{{ game.Publisher }}</p>
+        <p>{{ game.ESRB }}</p>
+        <p>{{ game.PublishDate }}</p>
     </div>
     {% endfor %}
 {% endblock %}

@@ -13,8 +13,8 @@
 <body>
 
     {%  block message %}
-        {% for i in messages %}
-            <h6 class="alert alert-{{ i.tags }}">{{ i }}</h4>
+        {% for message in messages %}
+            <h6 class="alert alert-{{ message.tags }}">{{ message }}</h4>
         {% endfor %}
     {% endblock%} 
 
