@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'authentication',
     'home',
-    'games'
+    'games',
+    'tricks'
 ]
 
 MIDDLEWARE = [
@@ -61,7 +62,8 @@ TEMPLATES = [
                  , TEMPLATES_DIR / 'frontend' / 'base'
                  , TEMPLATES_DIR / 'frontend' / 'authentication' 
                  , TEMPLATES_DIR / 'frontend' / 'home'
-                 , TEMPLATES_DIR / 'frontend' / 'games'],
+                 , TEMPLATES_DIR / 'frontend' / 'games'
+                 , TEMPLATES_DIR / 'frontend' / 'tricks'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
