@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ game_name }} Tricks!
+{% endblock %}
+
+{% block content %}
+    {{ tricks }}
+    {% for i in tricks %}
+    {{ i.title }}
+    {% endfor %}
+{% endblock %}
