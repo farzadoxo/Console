@@ -8,10 +8,11 @@
 {% block content %}
     {% for game in games %}
     <div class="game_card" style="width: 300px; height: 350px; border: 3px; border-style: dashed; border-color:violet; display:inline-block;">
-        <p>{{ game.Title }}</p>
-        <p>{{ game.Publisher }}</p>
-        <p>{{ game.ESRB }}</p>
-        <p>{{ game.PublishDate }}</p>
+        <p>{{ game.title }}</p>
+        <p>{{ game.publisher }}</p>
+        <p>{{ game.esrb }}</p>
+        <p>{{ game.publisherDate }}</p>
+        <a href="{% url 'get_tricks_by_game' game.id %}"><button type="button" class="btn btn-warning">Tricks</button></a>
     </div>
     {% endfor %}
 {% endblock %}
