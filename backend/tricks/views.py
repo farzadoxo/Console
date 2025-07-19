@@ -1,13 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from games.models import Game
 from .models import Trick
 from django.contrib import messages
 from .forms import NewTrickForm
+from django.contrib.auth.models import User
+
 
 class Tricks:
 
     def get_all_tricks(request):
-        ...
+        tricks = Trick.objects.all()
+        return render(request,'all_tricks.html',context={'tricks':tricks})
 
 
     def get_tricks_by_game(request,game_id:int):
@@ -27,15 +30,31 @@ class Tricks:
                 form = NewTrickForm(request.POST)
                 
                 if form.is_valid():
+
+                    # get usefull data
                     cd = form.cleaned_data
-                    trick = Trick.objects.create(title=cd['title'],descreption=cd['descreption'],game=['game'],creator=request.user.id)
+                    game = Game.objects.get(id=cd['game'])
+                    creator = User.objects.get(id=request.user.id)
+
+                    # create trick and save it
+                    trick = Trick.objects.create(title=cd['title'],
+                                                 description=cd['description'],
+                                                 game=game,
+                                                 creator=creator)
                     trick.save()
 
-                    # TODO : COMPLETE THIS ENDPOINT
+                    # show message and redirect to home
+                    messages.success(request,"Trick successfully created for {} Game!".format(game.title,creator.username))
+                    return redirect('home')
+            
+            else:
+                messages.warning(request,"Please login first!",extra_tags='warning')
 
         else:
             form = NewTrickForm()
 
+        # render page
+        form = NewTrickForm()
         return render(request,'new_trick.html',context={'form':form})
 
     

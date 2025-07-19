@@ -1,9 +1,9 @@
 from django import forms
+from games.models import Game
+from .extentions import game_choise_field
 
 
 class NewTrickForm(forms.Form):
-    Title = forms.CharField()
-    Descreption = forms.CharField()
-    Game = forms.ChoiceField()
-
-    # TODO : FILL GAME CHOISE WITH GAMES
+    title = forms.CharField()
+    description = forms.CharField()
+    game = forms.ChoiceField(choices=game_choise_field())
