@@ -7,3 +7,5 @@ class Game(models.Model):
     genre = models.CharField(max_length=10)
     esrb = models.CharField(max_length=1)
     iconUrl = models.CharField(max_length=100)
+
+
