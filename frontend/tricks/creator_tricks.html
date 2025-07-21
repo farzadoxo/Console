@@ -8,7 +8,12 @@
 {% block content %}
     <h2>{{ creator.username }}'s Tricks </h2>
     <h4>Total tricks : {{ tricks.count }}</h4>
-    {% for i in tricks %}
-        {{ i.game.title }}
+    {% for trick in tricks %}
+        <div class="game_card" style="width: 300px; height: 350px; border: 3px; border-style: dashed; border-color:violet; display:inline-block;">
+            <h6>{{ trick.title }}</h6>
+            <p>👤 By : {{ trick.creator.username }}</p>
+            <p>🎮 For : {{ trick.game.title }}</p>
+            <a href="{% url 'show_trick' trick.id %}"><button type="button" class="btn btn-info">Show</button></a>
+        </div>
     {% endfor %}
 {% endblock %}

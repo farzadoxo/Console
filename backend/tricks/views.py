@@ -79,5 +79,14 @@ class Tricks:
         except ObjectDoesNotExist:
             messages.error(request,"User Not Found!",extra_tags='error')
             return redirect('home')
+        
+
+
+
+    
+
+    def show_trick(request,trick_id:int):
+        trick = Trick.objects.get(id=trick_id)
+        return render(request,'show_trick.html',context={'trick':trick})
 
     
