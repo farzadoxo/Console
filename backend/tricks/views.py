@@ -4,6 +4,7 @@ from .models import Trick
 from django.contrib import messages
 from .forms import NewTrickForm
 from django.contrib.auth.models import User
+from django.core.exceptions import ObjectDoesNotExist
 
 
 class Tricks:
@@ -11,6 +12,10 @@ class Tricks:
     def get_all_tricks(request):
         tricks = Trick.objects.all()
         return render(request,'all_tricks.html',context={'tricks':tricks})
+
+
+
+
 
 
     def get_tricks_by_game(request,game_id:int):
@@ -22,6 +27,8 @@ class Tricks:
         else:
             messages.error(request,"This game doesn't exists!",extra_tags='error')
         
+
+
 
 
     def new_trick(request):
@@ -56,5 +63,21 @@ class Tricks:
         # render page
         form = NewTrickForm()
         return render(request,'new_trick.html',context={'form':form})
+    
+
+
+
+
+
+    def get_tricks_by_creator(request,creator_id:int):
+        try:
+            # get user and tricks 
+            creator = User.objects.get(id=creator_id)
+            tricks = Trick.objects.filter(creator__id = creator.id)
+            return render(request,'creator_tricks.html',context={'tricks':tricks,'creator':creator})
+        
+        except ObjectDoesNotExist:
+            messages.error(request,"User Not Found!",extra_tags='error')
+            return redirect('home')
 
     

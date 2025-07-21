@@ -1,11 +1,14 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    {{ game_name }} Tricks!
+
 {% endblock %}
 
+
 {% block content %}
+    <h2>{{ creator.username }}'s Tricks </h2>
+    <h4>Total tricks : {{ tricks.count }}</h4>
     {% for i in tricks %}
-        {{ i.title }}
+        {{ i.game.title }}
     {% endfor %}
 {% endblock %}
