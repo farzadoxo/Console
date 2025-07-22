@@ -8,3 +8,4 @@ class Trick(models.Model):
     description = models.CharField(max_length=5000)
     game = models.ForeignKey(Game , on_delete=models.CASCADE)
     creator = models.ForeignKey(User , on_delete=models.CASCADE)
+    createdAt = models.DateTimeField()
