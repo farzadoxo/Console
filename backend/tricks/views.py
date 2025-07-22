@@ -5,6 +5,7 @@ from django.contrib import messages
 from .forms import NewTrickForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
+from datetime import datetime
 
 
 class Tricks:
@@ -47,7 +48,8 @@ class Tricks:
                     trick = Trick.objects.create(title=cd['title'],
                                                  description=cd['description'],
                                                  game=game,
-                                                 creator=creator)
+                                                 creator=creator,
+                                                 createdAt=datetime.now())
                     trick.save()
 
                     # show message and redirect to home
