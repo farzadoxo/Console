@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     'authentication',
     'home',
     'games',
-    'tricks'
+    'tricks',
+    'dashboard'
 ]
 
 MIDDLEWARE = [
@@ -63,7 +64,8 @@ TEMPLATES = [
                  , TEMPLATES_DIR / 'frontend' / 'authentication' 
                  , TEMPLATES_DIR / 'frontend' / 'home'
                  , TEMPLATES_DIR / 'frontend' / 'games'
-                 , TEMPLATES_DIR / 'frontend' / 'tricks'],
+                 , TEMPLATES_DIR / 'frontend' / 'tricks'
+                 , TEMPLATES_DIR / 'frontend' / 'dashboard'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
