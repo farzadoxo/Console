@@ -5,7 +5,12 @@
 {% endblock %}
 
 {% block content %}
-    {% for i in tricks %}
-        {{ i.title }}
+    {% for trick in tricks %}
+        <div class="trick_card" style="width: 300px; height: 350px; border: 3px; border-style: dashed; border-color:violet; display:inline-block;">
+            <h6>{{ trick.title }}</h6>
+            <p>👤 By : {{ trick.creator.username }}</p>
+            <p>🎮 For : {{ trick.game.title }}</p>
+            <a href="{% url 'show_trick' trick.id %}"><button type="button" class="btn btn-info">Show</button></a>
+        </div>
     {% endfor %}
 {% endblock %}

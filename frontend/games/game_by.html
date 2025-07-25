@@ -1,0 +1,19 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    Games By {{ title }}
+{% endblock %}
+
+{% block content %}
+    {% for game in games %}
+        <div class="game_card" style="width: 300px; height: 350px; border: 3px; border-style: dashed; border-color:violet; display:inline-block;">
+            <b>{{ game.title }}</b>
+            <hr>
+            <p>Publisher : {{ game.publisher.name }}</p>
+            <p>ESRB : {{ game.esrb.sign }}</p>
+            <p>Release Date : {{ game.publishDate }}</p>
+            <p>Genere : {{ game.genre.title }}</p>
+            <a href="{% url 'get_tricks_by_game' game.id %}"><button type="button" class="btn btn-warning">Tricks</button></a>
+        </div>
+    {% endfor %}
+{% endblock %}
