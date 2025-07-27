@@ -24,9 +24,22 @@ class Tricks:
         if game != None:
             tricks = Trick.objects.filter(game__id = game.id)
 
-            return render(request,'game_tricks.html',context={'tricks':tricks , 'game_name':game.title})
+            return render(request,'tricks_by.html',context={'tricks':tricks , 'title':f"{game.title}"})
         else:
             messages.error(request,"This game doesn't exists!",extra_tags='error')
+
+    
+
+    def get_tricks_by_creator(request,creator_id:int):
+        try:
+            # get user and tricks 
+            creator = User.objects.get(id=creator_id)
+            tricks = Trick.objects.filter(creator__id = creator.id)
+            return render(request,'tricks_by.html',context={'tricks':tricks,'title':f"{creator.username}"})
+        
+        except ObjectDoesNotExist:
+            messages.error(request,"User Not Found!",extra_tags='error')
+            return redirect('home')
         
 
 
@@ -65,25 +78,7 @@ class Tricks:
         # render page
         form = NewTrickForm()
         return render(request,'new_trick.html',context={'form':form})
-    
-
-
-
-
-
-    def get_tricks_by_creator(request,creator_id:int):
-        try:
-            # get user and tricks 
-            creator = User.objects.get(id=creator_id)
-            tricks = Trick.objects.filter(creator__id = creator.id)
-            return render(request,'creator_tricks.html',context={'tricks':tricks,'creator':creator})
         
-        except ObjectDoesNotExist:
-            messages.error(request,"User Not Found!",extra_tags='error')
-            return redirect('home')
-        
-
-
 
     
 
