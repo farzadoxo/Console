@@ -9,14 +9,18 @@ from datetime import datetime
 
 
 class Tricks:
+    """
+        This class provide some function to work with Trciks
+        like create new trick , get tricks from database ,
+        applying changes on tricks , filter , delete , etc.
 
+    """
+
+
+    """ Gets and filters trick """
     def get_all_tricks(request):
         tricks = Trick.objects.all()
         return render(request,'all_tricks.html',context={'tricks':tricks})
-
-
-
-
 
 
     def get_tricks_by_game(request,game_id:int):
@@ -28,7 +32,6 @@ class Tricks:
         else:
             messages.error(request,"This game doesn't exists!",extra_tags='error')
 
-    
 
     def get_tricks_by_creator(request,creator_id:int):
         try:
@@ -42,9 +45,9 @@ class Tricks:
             return redirect('home')
         
 
+        
 
-
-
+    """ Modifying tricks """
     def new_trick(request):
         if request.method == 'POST':
             if request.user.is_authenticated:
@@ -82,6 +85,8 @@ class Tricks:
 
     
 
+
+    """ Actions on tricks """
     def show_trick(request,trick_id:int):
         trick = Trick.objects.get(id=trick_id)
         return render(request,'show_trick.html',context={'trick':trick})
