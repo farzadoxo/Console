@@ -8,5 +8,8 @@ urlpatterns = [
     path('all/',Tricks.get_all_tricks , name='get_all_tricks'),
     path('game/<int:game_id>/',Tricks.get_tricks_by_game , name='get_tricks_by_game'),
     path('new/',Tricks.new_trick , name='new_trick'),
-    path('user/<int:creator_id>/',Tricks.get_tricks_by_creator , name='get_tricks_by_creator')
+    path('user/<int:creator_id>/',Tricks.get_tricks_by_creator , name='get_tricks_by_creator'),
+    path('delete/<int:trick_id>/',Tricks.delete_trick , name='delete_trick'),
+    path('update/<int:trick_id>/',Tricks.update_trick , name='update_trick'),
+    
 ]

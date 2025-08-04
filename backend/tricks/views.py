@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect
 from games.models import Game
 from .models import Trick
 from django.contrib import messages
-from .forms import NewTrickForm
+from .forms import NewTrickForm , UpdateTrickForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
@@ -45,7 +45,18 @@ class Tricks:
             return redirect('home')
         
 
-        
+
+    
+
+
+    """ Actions on tricks """
+    def show_trick(request,trick_id:int):
+        trick = Trick.objects.get(id=trick_id)
+        return render(request,'show_trick.html',context={'trick':trick})
+
+    
+
+
 
     """ Modifying tricks """
     def new_trick(request):
@@ -81,14 +92,60 @@ class Tricks:
         # render page
         form = NewTrickForm()
         return render(request,'new_trick.html',context={'form':form})
+    
+
+    
+    
+    def delete_trick(request,trick_id):
+        try:
+            trick = Trick.objects.get(id=trick_id)
+            user = request.user
+        except ObjectDoesNotExist:
+            messages.error(request,"Object not found !",extra_tags='error')
+            return redirect('')
+        
+        if request.user.is_authenticated:
+            if request.user.username == trick.creator.username:
+            # deleting trick
+                trick.delete()
+                messages.info(request,f"{trick.title} deleted!",extra_tags='info')
+                return redirect('home')
+            else:
+                messages.warning(request,"You are not creator of this trick!!",'warning')
+                return redirect('home')
+        else:
+            ...
+
+
+
+
+    # TODO : Solve instance problem later
+    def update_trick(request,trick_id):
+        try:
+            trick = Trick.objects.get(id=trick_id)
+        except ObjectDoesNotExist:
+            messages.error(request,"Trick doesn't exists!",extra_tags='error')
+            return redirect('home')
+        
+        if request.method == 'POST':
+            if request.user.is_authenticated:
+                if request.user.username == trick.creator.username:
+                    form = UpdateTrickForm(request.POST)
+
+                    if form.is_valid():
+                        form.save()
+                        messages.success(request,"Trick updated successfully !",extra_tags='success')
+                        return redirect('home')
+                
+                else:
+                    messages.warning(request,'You are not creator of this trick !',extra_tags='warning')
+
+            else:
+                messages.warning(request,'Please login first !',extra_tags='warning')
+                return redirect('home')
+            
+        else:
+            form = UpdateTrickForm(instance=trick)
         
 
-    
-
-
-    """ Actions on tricks """
-    def show_trick(request,trick_id:int):
-        trick = Trick.objects.get(id=trick_id)
-        return render(request,'show_trick.html',context={'trick':trick})
-
-    
+        return render(request , 'update_trick.html' , context={'form':form})
