@@ -22,6 +22,7 @@ urlpatterns = [
     path('',include('home.urls')),
     path('auth/', include('authentication.urls')),
     path('games/',include('games.urls')),
-    path('tricks/',include('tricks.urls'))
+    path('tricks/',include('tricks.urls')),
+    path('dash/' , include('dashboard.urls'))
 
 ]
