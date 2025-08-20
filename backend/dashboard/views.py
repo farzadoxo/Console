@@ -4,8 +4,8 @@ from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from tricks.models import Trick
 from .forms import UpdateUserAccount , UpdateUserProfile
-
-
+from games.models import Game
+from .models import UserFavoritGame
 
 class Dash:
     """"
@@ -40,12 +40,28 @@ class Dash:
             return redirect('home')
 
 
-    def edit_user_account(request,user_id:int):
-        ...
+    # TODO : complete this endpoint!
+    def edit_user_account(request):
+        try:
+            trick = Trick.objects.get(id=)
 
 
-    def favorit_games(request,user_id:int):
-        ...
+    def favorit_games(request,game_id):
+        try:
+            game = Game.objects.get(id=game_id)
+        except ObjectDoesNotExist:
+            messages.error(request , "Game does not exists!",extra_tags='error')
+
+
+        if request.user.is_authenticated:
+            favorit_game = UserFavoritGame.objects.create(user=request.user ,
+                                                           game=game)
+            favorit_game.save()
+
+            messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
+            return redirect("home")
+        
+        
 
     
     def saved_tricks(request,user_id:int):
