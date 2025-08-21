@@ -19,10 +19,10 @@ from django.urls import path , include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('',include('home.urls')),
-    path('auth/', include('authentication.urls')),
-    path('games/',include('games.urls')),
-    path('tricks/',include('tricks.urls')),
-    path('dash/' , include('dashboard.urls'))
+    path('',include(('home.urls' , 'home') , namespace='home')),
+    path('auth/', include(('authentication.urls' , 'authentication') , namespace='authentication')),
+    path('games/',include(('games.urls' , 'games'), namespace='games')),
+    path('tricks/',include(('tricks.urls' , 'tricks') , namespace='tricks')),
+    path('dash/' , include(('dashboard.urls') , namespace='dashboard'))
 
 ]
