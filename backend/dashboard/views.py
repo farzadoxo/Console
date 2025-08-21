@@ -40,32 +40,47 @@ class Dash:
             return redirect('home')
 
 
-    # TODO : complete this endpoint!
-    def edit_user_account(request):
-        try:
-            trick = Trick.objects.get(id=)
 
+
+
+    def edit_user_account(request,trick_id:int):
+        ...
+        
 
     def favorit_games(request,game_id):
-        try:
-            game = Game.objects.get(id=game_id)
-        except ObjectDoesNotExist:
-            messages.error(request , "Game does not exists!",extra_tags='error')
-
-
         if request.user.is_authenticated:
-            favorit_game = UserFavoritGame.objects.create(user=request.user ,
-                                                           game=game)
+            try:
+                game = Game.objects.get(id=game_id)
+            except ObjectDoesNotExist:
+                messages.error(request , "Game does not exists!",extra_tags='error')
+        
+
+            favorit_game = UserFavoritGame.objects.create(user=request.user ,game=game)
             favorit_game.save()
 
             messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
-            return redirect("home")
+            return redirect('home')
         
         
 
+
     
-    def saved_tricks(request,user_id:int):
-        ...
+    def saved_tricks(request,trick_id:int):
+        if request.user.is_authenticated:
+            try:
+                trick = Trick.objects.get(id=trick_id)
+            except ObjectDoesNotExist:
+                messages.error(request,"Trick does not exists!",extra_tags='eroor')
+
+            
+            saved_trick = Trick.objects.create(user=request.user , trick=trick)
+            saved_trick.save()
+
+            messages.success(request,"Trick saved successfully!",extra_tags="success")
+            return redirect('home')
+        
+
+
 
     """ Action """
     def edit_user_profile(request,user_id:int):
