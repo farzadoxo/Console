@@ -42,7 +42,7 @@ class Tricks:
         
         except ObjectDoesNotExist:
             messages.error(request,"User Not Found!",extra_tags='error')
-            return redirect('home')
+            return redirect('home:home')
         
 
 
@@ -143,7 +143,7 @@ class Tricks:
             else:
                 messages.warning(request,'Please login first !',extra_tags='warning')
                 return redirect('home')
-            tricks
+            
         else:
             form = UpdateTrickForm(instance=trick)
         
