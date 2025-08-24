@@ -34,10 +34,10 @@ class Dash:
             
             else:
                 messages.warning(request,"Dont do this again!",extra_tags='warning')
-                return redirect('home')
+                return redirect('home:home')
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')
-            return redirect('home')
+            return redirect('home:home')
 
 
 
@@ -47,7 +47,7 @@ class Dash:
         ...
         
 
-    def favorit_games(request,game_id):
+    def add_favorit_games(request,game_id):
         if request.user.is_authenticated:
             try:
                 game = Game.objects.get(id=game_id)
@@ -59,13 +59,18 @@ class Dash:
             favorit_game.save()
 
             messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
-            return redirect('home')
+            return redirect('games:info',game_id=game_id)
+        
+        else:
+            messages.warning(request,"Please login first!",extra_tags='error')
+            return redirect('games:info',game_id=game_id)
+
         
         
 
 
     
-    def saved_tricks(request,trick_id:int):
+    def add_saved_tricks(request,trick_id:int):
         if request.user.is_authenticated:
             try:
                 trick = Trick.objects.get(id=trick_id)
