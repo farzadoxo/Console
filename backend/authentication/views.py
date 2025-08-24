@@ -23,16 +23,16 @@ class Auth:
                     
                     # Show message and return 
                     messages.info(request,f"User {cd['UserName']} registered successfully!" , extra_tags='success')
-                    return redirect('home')
+                    return redirect('home:home')
                 
                 except Exception as e:
                     # Show ERROR and return
                     messages.error(request , "{}".format(e),extra_tags='error')
-                    return redirect('register')
+                    return redirect('authentication:register')
   
             else:
                 messages.error(request , "Form is not valid !",extra_tags='warning')
-                return redirect('register')
+                return redirect('authentication:register')
         else:
             # Set request method to: GET
             form= UserRegisterForm()
@@ -52,10 +52,10 @@ class Auth:
 
                     messages.success(request,f"Welcome dear {user.first_name} {user.last_name}" , extra_tags='success')
 
-                    return redirect('home')
+                    return redirect('home:home')
                 else:
                     messages.error(request,"Your password or username is invalid !",extra_tags='error')
-                    return redirect('home')
+                    return redirect('home:home')
                 
         else:
             form = UserLoginForm()
@@ -68,7 +68,7 @@ class Auth:
         if request.user.is_authenticated:
             logout(request)
             messages.success(request,'User loged out successfully !',extra_tags='success')
-            return redirect('home')
+            return redirect('home:home')
         else:
             messages.error(request,"No one's loged in!",extra_tags='warning')
-            return redirect('home')
+            return redirect('home:home')

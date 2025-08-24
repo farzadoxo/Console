@@ -4,19 +4,12 @@
     Console
 {% endblock %}
 
-{% block content %}
-    <header>
-        <h6>{{ request.user.username }}</h6>
-        <h1 id="welcomer" style="text-align: center;">Welcome to Console 🎮</h1>
-        <hr>
-    </header>
 
-    <nav>
-        {% if request.user.is_authenticated %}
-            <a href="{% url 'logout' %}"><button type="button" class="btn btn-danger">Logout</button></a>
-        {% else %}
-            <a href="{% url 'register' %}"><button type="button" class="btn btn-primary">Signup</button></a>
-            <a href="{% url 'login' %}"><button type="button" class="btn btn-success">Login</button></a>
-        {% endif %}      
-    </nav>
+{% block content %}
+
+    <h6>{{ request.user.username }}</h6>
+    <h1 id="welcomer" style="text-align: center;">Welcome to Console 🎮</h1>
+    <hr>
+
+
 {% endblock %}
