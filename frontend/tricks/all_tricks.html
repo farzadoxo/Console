@@ -10,7 +10,7 @@
             <h6>{{ trick.title }}</h6>
             <p>👤 By : {{ trick.creator.username }}</p>
             <p>🎮 For : {{ trick.game.title }}</p>
-            <a href="{% url 'show_trick' trick.id %}"><button type="button" class="btn btn-info">Show</button></a>
+            <a href="{% url 'tricks:show_trick' trick.id %}"><button type="button" class="btn btn-info">Show</button></a>
         </div>
     {% endfor %}
 {% endblock %}

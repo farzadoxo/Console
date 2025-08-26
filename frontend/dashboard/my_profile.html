@@ -6,7 +6,25 @@
 
 
 {% block content %}
-    <div id="show-profile">
-        
+    <h2>Hey <b style="color: red;">{{ user.first_name }}</b> welcome to your Profile 👋</h2>
+    <h2>---------------------------------------------------------</h2>
+
+    <div id="personal_info" style="width: 400px; height: 600px; border: 3px solid orange; float: left;">
+        <h4>Personal Info:</h4>
+        <h5>🙋🏼‍♂️ Fullname : {{ user.first_name }} {{ user.last_name }}</h5>
+        <h5>🆔 Username : {{ user.username }}</h5>
+        <h5>📧 Email : {{ user.email }}</h5>
+        <h5>💡 Tricks count : {{ tricks.count }}</h5>
+    </div>
+
+    <div id="latest_tricks" style="width: 400px; height: 600px; border: 3px solid blue; float: left;">
+        <h4>Your latest tricks:</h4>
+        {% for trick in tricks %}
+            <h5>-> {{ trick.title }}</h5>
+        {% endfor %}
+    </div>
+
+    <div id="actions" style="width: 400px; height: 400px; border: 3px solid red; float: left;">
+        <a href="{% url 'dashboard:get_user_favorit_games' %}"><button type="button" class="btn btn-primary">My favorit games</button></a>
     </div>
 {% endblock %}
