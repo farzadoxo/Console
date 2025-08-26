@@ -81,7 +81,7 @@ class Tricks:
 
                     # show message and redirect to home
                     messages.success(request,"Trick successfully created for {} Game!".format(game.title,creator.username))
-                    return redirect('home')
+                    return redirect('home:home')
             
             else:
                 messages.warning(request,"Please login first!",extra_tags='warning')

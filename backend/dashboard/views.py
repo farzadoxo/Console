@@ -5,7 +5,7 @@ from django.contrib import messages
 from tricks.models import Trick
 from .forms import UpdateUserAccount , UpdateUserProfile
 from games.models import Game
-from .models import UserFavoritGame
+from .models import UserFavoritGame , UserSavedTrick
 
 class Dash:
     """"
@@ -38,14 +38,67 @@ class Dash:
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')
             return redirect('home:home')
+        
+    
+
+
+    
+    def get_user_favorit_games(request):
+
+        if request.user.is_authenticated:
+            try:
+                fav_games = UserFavoritGame.objects.filter(user__id = request.user.id)
+            except ObjectDoesNotExist as error:
+                messages.error(request,f"{error}",extra_tags='error')
+                return redirect('home:home')
+            
+            return render(request,'favorit_games.html',context={'fav_games':fav_games})
+
+        
 
 
 
 
-
-    def edit_user_account(request,trick_id:int):
+    
+    def get_user_saved_tricks(request):
         ...
         
+
+
+    
+
+
+    """ Action """
+    def edit_user_profile(request,user_id:int):
+        try:
+            user = User.objects.get(id=user_id)
+        except ObjectDoesNotExist:
+            messages.error(request,"User doesn't exists!",extra_tags='error')
+        
+        if request.method == "POST":
+            if request.user.is_authenticated:
+                if request.user.username == user.username:
+                    form = UpdateUserProfile(request.POST)
+
+                    if form.is_valid():
+                        user.first_name = form.FirstName
+                        user.last_name = form.LastName
+
+                        user.save()
+                    
+                else:
+                    ...
+            else:
+                ...
+        else:
+            form = UpdateUserProfile()
+        
+
+        return render(request,'update_user_profile.html',context={'form':form})
+    
+
+
+
 
     def add_favorit_games(request,game_id):
         if request.user.is_authenticated:
@@ -87,33 +140,9 @@ class Dash:
 
 
 
-    """ Action """
-    def edit_user_profile(request,user_id:int):
-        try:
-            user = User.objects.get(id=user_id)
-        except ObjectDoesNotExist:
-            messages.error(request,"User doesn't exists!",extra_tags='error')
-        
-        if request.method == "POST":
-            if request.user.is_authenticated:
-                if request.user.username == user.username:
-                    form = UpdateUserProfile(request.POST)
+    def edit_user_account(request,trick_id:int):
+        ...
 
-                    if form.is_valid():
-                        user.first_name = form.FirstName
-                        user.last_name = form.LastName
-
-                        user.save()
-                    
-                else:
-                    ...
-            else:
-                ...
-        else:
-            form = UpdateUserProfile()
-        
-
-        return render(request,'update_user_profile.html',context={'form':form})
                 
 
 
