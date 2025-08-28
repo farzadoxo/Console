@@ -48,6 +48,7 @@ class Dash:
         if request.user.is_authenticated:
             try:
                 fav_games = UserFavoritGame.objects.filter(user__id = request.user.id)
+
             except ObjectDoesNotExist as error:
                 messages.error(request,f"{error}",extra_tags='error')
                 return redirect('home:home')
@@ -112,11 +113,11 @@ class Dash:
             favorit_game.save()
 
             messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
-            return redirect('games:info',game_id=game_id)
+            return redirect('games:game_info',game_id=game_id)
         
         else:
             messages.warning(request,"Please login first!",extra_tags='error')
-            return redirect('games:info',game_id=game_id)
+            return redirect('games:game_info',game_id=game_id)
 
         
         
