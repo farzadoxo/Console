@@ -22,8 +22,8 @@
     <div id="manage_trick">
         <h5>Manage Trick </h5>
         {% if request.user.username == trick.creator.username %}
-            <a href="{% url 'delete_trick' trick.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
-            <a href="{% url 'update_trick' trick.id %}"><button type="button" class="btn btn-primary">Update</button></a>
+            <a href="{% url 'tricks:delete_trick' trick.id %}"><button type="button" class="btn btn-danger">Delete</button></a>
+            <a href="{% url 'tricks:update_trick' trick.id %}"><button type="button" class="btn btn-primary">Update</button></a>
         {% endif %}
 
     </div>
