@@ -5,7 +5,7 @@ from django.contrib import messages
 from tricks.models import Trick
 from .forms import UpdateUserAccount , UpdateUserProfile
 from games.models import Game
-from .models import UserFavoritGame , UserSavedTrick
+from .models import FavoritGame , SavedTrick
 
 class Dash:
     """"
@@ -16,53 +16,40 @@ class Dash:
 
 
     """ Gets and Fiilters """
-    def my_profile(request,user_id:int):
-        try:
-            user = User.objects.get(id=user_id)
-        except ObjectDoesNotExist:
-            messages.error(request,"User doesn't exists!",extra_tags='error')
-
-    
+    def my_profile(request):
         if request.user.is_authenticated:
-            if request.user.username == user.username:
-                tricks = Trick.objects.filter(creator__id = user_id)
-
-                return render(request,'my_profile.html' , context={
-                    'user':user,
-                    'tricks': tricks
-                })
+            return render(request,'my_profile.html')
             
-            else:
-                messages.warning(request,"Dont do this again!",extra_tags='warning')
-                return redirect('home:home')
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')
             return redirect('home:home')
         
     
 
-
     
     def get_user_favorit_games(request):
 
         if request.user.is_authenticated:
-            try:
-                fav_games = UserFavoritGame.objects.filter(user__id = request.user.id)
-
-            except ObjectDoesNotExist as error:
-                messages.error(request,f"{error}",extra_tags='error')
-                return redirect('home:home')
-            
+            fav_games = FavoritGame.objects.filter(user__id = request.user.id)
+ 
             return render(request,'favorit_games.html',context={'fav_games':fav_games})
+        
+        else:
+            messages.warning(request,"Please login first!",extra_tags='warning')
+            return redirect('home:home')
 
         
 
-
-
-
     
     def get_user_saved_tricks(request):
-        ...
+        if request.user.is_authenticated:
+            saved_tricks = SavedTrick.objects.filter(user__id = request.user.id)
+
+            return render(request,'saved_tricks.html',context={'saved_tricks':saved_tricks})
+        
+        else:
+            messages.warning(request,"Please login first!",extra_tags='warning')
+            return redirect('home:home')
         
 
 
@@ -100,21 +87,26 @@ class Dash:
 
 
 
-
+    # TODO: Fix this endpoint 
     def add_favorit_games(request,game_id):
         if request.user.is_authenticated:
             try:
                 game = Game.objects.get(id=game_id)
             except ObjectDoesNotExist:
                 messages.error(request , "Game does not exists!",extra_tags='error')
-        
 
-            favorit_game = UserFavoritGame.objects.create(user=request.user ,game=game)
-            favorit_game.save()
+            user_fav_games = FavoritGame.objects.filter(game__id = game.id)
+            if user_fav_games == None:
+                favorit_game = FavoritGame.objects.create(user=request.user ,game=game)
+                favorit_game.save()
 
-            messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
-            return redirect('games:game_info',game_id=game_id)
-        
+                messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
+                return redirect('games:game_info',game_id=game_id)
+            
+            else:
+                messages.success(request,"This game added to your favorite games befor!!!",extra_tags='error')
+                return redirect('games:game_info',game_id=game_id)
+ 
         else:
             messages.warning(request,"Please login first!",extra_tags='error')
             return redirect('games:game_info',game_id=game_id)
