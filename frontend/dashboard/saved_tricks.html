@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ request.user.first_name }}'s saved tricks 
+{% endblock %}
+
+
+{% block content %}
+    {% for i in saved_tricks %}
+        {{ i.trick.title }}
+    {% endfor %}
+{% endblock %}
