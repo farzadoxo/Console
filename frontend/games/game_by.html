@@ -13,7 +13,7 @@
             <p>ESRB : {{ game.esrb.sign }}</p>
             <p>Release Date : {{ game.publishDate }}</p>
             <p>Genere : {{ game.genre.title }}</p>
-            <a href="{% url 'get_tricks_by_game' game.id %}"><button type="button" class="btn btn-warning">Tricks</button></a>
+            <a href="{% url 'tricks:get_tricks_by_game' game.id %}"><button type="button" class="btn btn-warning">Tricks</button></a>
         </div>
     {% endfor %}
 {% endblock %}
