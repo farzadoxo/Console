@@ -28,7 +28,8 @@ class Home:
         try:
             user = User.objects.get(id=user_id)
         except ObjectDoesNotExist:
-            messages.error(request,"User doesn't exixts !",extra_tags='error')
+            messages.error(request,"User doesn't exixts !",extra_tags='danger')
+            return redirect('home:home')
 
         # get user tricks 
         tricks = Trick.objects.filter(creator__id = user_id)

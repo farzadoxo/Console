@@ -72,3 +72,9 @@ class Auth:
         else:
             messages.error(request,"No one's loged in!",extra_tags='warning')
             return redirect('home:home')
+        
+
+    
+
+    def delete_account(request):
+        ...

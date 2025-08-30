@@ -55,17 +55,18 @@ class Dash:
 
     
 
-
+    # TODO : Fix this endpoint
     """ Action """
-    def edit_user_profile(request,user_id:int):
-        try:
-            user = User.objects.get(id=user_id)
-        except ObjectDoesNotExist:
-            messages.error(request,"User doesn't exists!",extra_tags='error')
-        
+    def edit_user_profile(request):
         if request.method == "POST":
             if request.user.is_authenticated:
-                if request.user.username == user.username:
+                try:
+                    user = User.objects.get(id=request.user.id)
+                except ObjectDoesNotExist:
+                    messages.error(request,"User doesn't exists!",extra_tags='error')
+                    
+        
+
                     form = UpdateUserProfile(request.POST)
 
                     if form.is_valid():
@@ -73,15 +74,12 @@ class Dash:
                         user.last_name = form.LastName
 
                         user.save()
-                    
-                else:
-                    ...
             else:
-                ...
+                messages.warning(request,"Please login first!",extra_tags='warning')
+                return redirect('dashboard:my_prifile')
         else:
             form = UpdateUserProfile()
         
-
         return render(request,'update_user_profile.html',context={'form':form})
     
 
@@ -135,7 +133,7 @@ class Dash:
         
 
 
-
+    # TODO : Complete this endpoint
     def edit_user_account(request,trick_id:int):
         ...
 

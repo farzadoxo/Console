@@ -1,5 +1,8 @@
-from django.shortcuts import render
+from django.shortcuts import render , redirect
 from .models import Game , Genre , Publisher , ESRB
+from django.core.exceptions import ObjectDoesNotExist
+from django.contrib import messages
+
 
 
 class Games:
@@ -13,27 +16,43 @@ class Games:
 
     """ Gets and Filters """
     def get_games_by_genre(request,genre_id:int):
-        genres = Genre.objects.get(id=genre_id)
-        if genres != None:
-            games = Game.objects.filter(genre__id = genre_id)
+        try:
+            genre = Genre.objects.get(id=genre_id)
+        except ObjectDoesNotExist:
+            messages.error(request,"Genre code is invalid !",extra_tags='danger')
+            return redirect('home:home')
+        
+        games = Game.objects.filter(genre__id = genre.id)
+        return render(request,'game_by.html',context={'games':games , 'title':"Genre"})
 
-            return render(request,'game_by.html',context={'games':games , 'title':"Genre"})
+
+
 
     def get_games_by_publisher(request,publisher_id:int):
-        publisher = Publisher.objects.get(id=publisher_id)
-        if publisher != None:
-            games = Game.objects.filter(publisher__id = publisher_id)
+        try:
+            publisher = Publisher.objects.get(id=publisher_id)
+        except ObjectDoesNotExist:
+            messages.error(request,"Publisher code is invalid !",extra_tags='danger')
+            return redirect('home:home')
+        
+        games = Game.objects.filter(publisher__id = publisher.id)
+        return render(request,'game_by.html',context={'games':games,'title':"Publisher"})
 
-            return render(request,'game_by.html',context={'games':games,'title':"Publisher"})
+
 
 
     def get_games_by_esrb(request,esrb_sign:str):
-        esrb = ESRB.objects.get(sign=esrb_sign)
-        if esrb != None:
-            games = Game.objects.filter(esrb__id = esrb.id)
-
-            return render(request,'game_by.html', context={'games':games , 'title':"ESRB"})
+        try:
+            esrb = ESRB.objects.get(sign=esrb_sign)
+        except ObjectDoesNotExist:
+            messages.error(request,"Esrb code is invalid !",extra_tags='danger')
+            return redirect('home:home')
         
+        games = Game.objects.filter(esrb__id = esrb.id)
+        return render(request,'game_by.html', context={'games':games , 'title':"ESRB"})
+        
+
+
 
     def get_all_games(request):
         all_games = Game.objects.all()
