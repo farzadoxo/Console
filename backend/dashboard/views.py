@@ -87,25 +87,22 @@ class Dash:
 
 
 
-    # TODO: Fix this endpoint 
+
     def add_favorit_games(request,game_id):
         if request.user.is_authenticated:
             try:
                 game = Game.objects.get(id=game_id)
+                user_fav_games = FavoritGame.objects.get(game__id = game.id , user__id = request.user.id)
             except ObjectDoesNotExist:
-                messages.error(request , "Game does not exists!",extra_tags='error')
-
-            user_fav_games = FavoritGame.objects.filter(game__id = game.id)
-            if user_fav_games == None:
                 favorit_game = FavoritGame.objects.create(user=request.user ,game=game)
                 favorit_game.save()
 
                 messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
                 return redirect('games:game_info',game_id=game_id)
             
-            else:
-                messages.success(request,"This game added to your favorite games befor!!!",extra_tags='error')
-                return redirect('games:game_info',game_id=game_id)
+
+            messages.success(request,"This game added to your favorite games befor!!!",extra_tags='warning')
+            return redirect('games:game_info',game_id=game_id)
  
         else:
             messages.warning(request,"Please login first!",extra_tags='error')
@@ -120,15 +117,21 @@ class Dash:
         if request.user.is_authenticated:
             try:
                 trick = Trick.objects.get(id=trick_id)
+                user_saved_tricks = SavedTrick.objects.get(trick__id = trick.id , user__id = request.user.id)
             except ObjectDoesNotExist:
-                messages.error(request,"Trick does not exists!",extra_tags='eroor')
+                saved_trick = SavedTrick.objects.create(user=request.user , trick=trick)
+                saved_trick.save()
 
+                messages.success(request,"Trick saved successfully!",extra_tags="success")
+                return redirect('home:home')
             
-            saved_trick = Trick.objects.create(user=request.user , trick=trick)
-            saved_trick.save()
 
-            messages.success(request,"Trick saved successfully!",extra_tags="success")
-            return redirect('home')
+            messages.error(request,"This trick saved before!",extra_tags='warning')
+            return redirect('home:home')
+
+        else:
+            messages.warning(request,"Please login first!",extra_tags='danger')
+            return redirect('home:home')
         
 
 
