@@ -24,13 +24,16 @@ class Tricks:
 
 
     def get_tricks_by_game(request,game_id:int):
-        game = Game.objects.get(id=game_id)
-        if game != None:
-            tricks = Trick.objects.filter(game__id = game.id)
+        try:
+            game = Game.objects.get(id=game_id)
+        except ObjectDoesNotExist:
+            messages.error(request,"This game doesn't exists!",extra_tags='danger')
+            return redirect('home:home')
+        
+        tricks = Trick.objects.filter(game__id = game.id)
+        return render(request,'tricks_by.html',context={'tricks':tricks , 'title':f"{game.title}"})
 
-            return render(request,'tricks_by.html',context={'tricks':tricks , 'title':f"{game.title}"})
-        else:
-            messages.error(request,"This game doesn't exists!",extra_tags='error')
+            
 
 
     def get_tricks_by_creator(request,creator_id:int):
@@ -85,6 +88,7 @@ class Tricks:
             
             else:
                 messages.warning(request,"Please login first!",extra_tags='warning')
+                return redirect('home:home')
 
         else:
             form = NewTrickForm()
@@ -99,10 +103,9 @@ class Tricks:
     def delete_trick(request,trick_id):
         try:
             trick = Trick.objects.get(id=trick_id)
-            user = request.user
         except ObjectDoesNotExist:
             messages.error(request,"Object not found !",extra_tags='error')
-            return redirect('')
+            return redirect('home:home')
         
         if request.user.is_authenticated:
             if request.user.username == trick.creator.username:
@@ -112,9 +115,10 @@ class Tricks:
                 return redirect('home')
             else:
                 messages.warning(request,"You are not creator of this trick!!",'warning')
-                return redirect('home')
+                return redirect('home:home')
         else:
-            ...
+            messages.warning(request,"Please login first!",extra_tags='warning')
+            return redirect('home:home')
 
 
 
