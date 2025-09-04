@@ -43,9 +43,9 @@ class Games:
 
     def get_games_by_esrb(request,esrb_sign:str):
         try:
-            esrb = ESRB.objects.get(sign=esrb_sign)
+            esrb = ESRB.objects.get(sign=esrb_sign.upper())
         except ObjectDoesNotExist:
-            messages.error(request,"Esrb code is invalid !",extra_tags='danger')
+            messages.error(request,"Esrb sign is invalid !",extra_tags='danger')
             return redirect('home:home')
         
         games = Game.objects.filter(esrb__id = esrb.id)
