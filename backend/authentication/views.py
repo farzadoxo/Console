@@ -27,7 +27,7 @@ class Auth:
                 
                 except Exception as e:
                     # Show ERROR and return
-                    messages.error(request , "{}".format(e),extra_tags='error')
+                    messages.error(request , "{}".format(e),extra_tags='danger')
                     return redirect('authentication:register')
   
             else:
@@ -54,7 +54,7 @@ class Auth:
 
                     return redirect('home:home')
                 else:
-                    messages.error(request,"Your password or username is invalid !",extra_tags='error')
+                    messages.error(request,"Your password or username is invalid !",extra_tags='danger')
                     return redirect('home:home')
                 
         else:
@@ -72,9 +72,3 @@ class Auth:
         else:
             messages.error(request,"No one's loged in!",extra_tags='warning')
             return redirect('home:home')
-        
-
-    
-
-    def delete_account(request):
-        ...

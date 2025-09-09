@@ -137,6 +137,10 @@ class Dash:
     def edit_user_account(request,trick_id:int):
         ...
 
+
+    def delete_account(request):
+        ...
+
                 
 
 
