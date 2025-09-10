@@ -12,10 +12,9 @@ class Dash:
         This class provid some functions and methods to do some
         action or show data of users and its a user management panel.
     """
+    
 
-
-
-    """ Gets and Fiilters """
+    """ User profile and account """
     def my_profile(request):
         if request.user.is_authenticated:
             return render(request,'my_profile.html')
@@ -24,39 +23,18 @@ class Dash:
             messages.warning(request,"Please login first!",extra_tags='warning')
             return redirect('home:home')
         
-    
 
     
-    def get_user_favorit_games(request):
-
-        if request.user.is_authenticated:
-            fav_games = FavoritGame.objects.filter(user__id = request.user.id)
- 
-            return render(request,'favorit_games.html',context={'fav_games':fav_games})
-        
-        else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
-            return redirect('home:home')
-
-        
-
-    
-    def get_user_saved_tricks(request):
-        if request.user.is_authenticated:
-            saved_tricks = SavedTrick.objects.filter(user__id = request.user.id)
-
-            return render(request,'saved_tricks.html',context={'saved_tricks':saved_tricks})
-        
-        else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
-            return redirect('home:home')
-        
+    def edit_user_account(request):
+        ...
 
 
-    
 
-    # TODO : Fix this endpoint
-    """ Action """
+    def delete_account(request):
+        ...
+
+
+
     def edit_user_profile(request):
         if request.method == "POST":
             if request.user.is_authenticated:
@@ -81,9 +59,27 @@ class Dash:
             form = UpdateUserProfile()
         
         return render(request,'update_user_profile.html',context={'form':form})
+
+
+
+
+
+
     
 
+    """ Favorite games """
 
+    def get_user_favorit_games(request):
+
+        if request.user.is_authenticated:
+            fav_games = FavoritGame.objects.filter(user__id = request.user.id)
+ 
+            return render(request,'favorit_games.html',context={'fav_games':fav_games})
+        
+        else:
+            messages.warning(request,"Please login first!",extra_tags='warning')
+            return redirect('home:home')
+        
 
 
     def add_favorit_games(request,game_id):
@@ -105,12 +101,17 @@ class Dash:
         else:
             messages.warning(request,"Please login first!",extra_tags='error')
             return redirect('games:game_info',game_id=game_id)
+        
+
+
+    def remove_favorite_game(request):
+        ...
+
 
         
         
 
-
-    
+    """ Saved tricks """
     def add_saved_tricks(request,trick_id:int):
         if request.user.is_authenticated:
             try:
@@ -130,23 +131,20 @@ class Dash:
         else:
             messages.warning(request,"Please login first!",extra_tags='danger')
             return redirect('home:home')
-        
 
 
-    # TODO : Complete this endpoint
-    def edit_user_account(request,trick_id:int):
+
+    def get_user_saved_tricks(request):
+        if request.user.is_authenticated:
+            saved_tricks = SavedTrick.objects.filter(user__id = request.user.id)
+
+            return render(request,'saved_tricks.html',context={'saved_tricks':saved_tricks})
+
+        else:
+            messages.warning(request,"Please login first!",extra_tags='warning')
+            return redirect('home:home')
+            
+
+
+    def remove_saved_trick(request):
         ...
-
-
-    def delete_account(request):
-        ...
-
-                
-
-
-
-    
-
-    
-        
-
