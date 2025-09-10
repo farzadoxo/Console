@@ -6,6 +6,7 @@ from tricks.models import Trick
 from .forms import UpdateUserAccount , UpdateUserProfile
 from games.models import Game
 from .models import FavoritGame , SavedTrick
+from django.contrib.auth import logout
 
 class Dash:
     """"
@@ -22,16 +23,22 @@ class Dash:
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')
             return redirect('home:home')
-        
-
-    
-    def edit_user_account(request):
-        ...
 
 
 
     def delete_account(request):
-        ...
+        if request.user.is_authenticated:
+            try:
+                user = User.objects.get(id=request.user.id)
+                user.delete()
+                logout(request)
+
+                messages.success(request,"Your account deleted !",'success')
+                return redirect('home:home')
+            except Exception as error:
+                messages.error(request,"Somthing went wrong !",'danger')
+                return redirect('home:home')
+
 
 
 
@@ -59,6 +66,11 @@ class Dash:
             form = UpdateUserProfile()
         
         return render(request,'update_user_profile.html',context={'form':form})
+    
+
+
+    def edit_user_account(request):
+        ...
 
 
 
@@ -99,13 +111,31 @@ class Dash:
             return redirect('games:game_info',game_id=game_id)
  
         else:
-            messages.warning(request,"Please login first!",extra_tags='error')
+            messages.warning(request,"Please login first!",extra_tags='warning')
             return redirect('games:game_info',game_id=game_id)
         
 
 
-    def remove_favorite_game(request):
-        ...
+    def delete_favorite_game(request,game_id:int):
+        if request.user.is_authenticated:
+            try:
+                all_favorite_games = FavoritGame.objects.filter(user__id = request.user.id)
+
+                for i in all_favorite_games:
+                    if i.game.id == game_id:
+                        i.delete()
+
+                        messages.success(request,"Favorite game deleted!",'success')
+                        return redirect('dashboard:my_favorite_games')
+                    
+            except Exception as error:
+                messages.success(request,"somthing went wrong!",'danger')
+                return redirect('dashboard:my_favorite_games')
+        
+        else:
+            messages.warning(request,"Please login first!",extra_tags='warning')
+            return redirect('home:home')
+
 
 
         
