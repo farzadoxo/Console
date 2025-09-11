@@ -104,29 +104,26 @@ class Dash:
                 favorit_game.save()
 
                 messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
-                return redirect('games:game_info',game_id=game_id)
+                return redirect('dashboard:my_favorite_games')
             
 
             messages.success(request,"This game added to your favorite games befor!!!",extra_tags='warning')
-            return redirect('games:game_info',game_id=game_id)
+            return redirect('games:get_all_games')
  
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')
-            return redirect('games:game_info',game_id=game_id)
+            return redirect('games:get_all_games')
         
 
 
     def delete_favorite_game(request,game_id:int):
         if request.user.is_authenticated:
             try:
-                all_favorite_games = FavoritGame.objects.filter(user__id = request.user.id)
-
-                for i in all_favorite_games:
-                    if i.game.id == game_id:
-                        i.delete()
-
-                        messages.success(request,"Favorite game deleted!",'success')
-                        return redirect('dashboard:my_favorite_games')
+                game = FavoritGame.objects.filter(user__id = request.user.id , game__id = game_id)
+                game.delete()
+                
+                messages.success(request,"Favorite game deleted!",'success')
+                return redirect('dashboard:my_favorite_games')
                     
             except Exception as error:
                 messages.success(request,"somthing went wrong!",'danger')
@@ -152,15 +149,15 @@ class Dash:
                 saved_trick.save()
 
                 messages.success(request,"Trick saved successfully!",extra_tags="success")
-                return redirect('home:home')
+                return redirect('dashboard:my_saved_tricks')
             
 
             messages.error(request,"This trick saved before!",extra_tags='warning')
-            return redirect('home:home')
+            return redirect('tricks:get_all_tricks')
 
         else:
             messages.warning(request,"Please login first!",extra_tags='danger')
-            return redirect('home:home')
+            return redirect('tricks:get_all_tricks')
 
 
 
@@ -176,5 +173,19 @@ class Dash:
             
 
 
-    def remove_saved_trick(request):
-        ...
+    def delete_saved_trick(request,trick_id):
+        if request.user.is_authenticated:
+            try:
+                trick = SavedTrick.objects.filter(user__id = request.user.id , trick__id = trick_id)
+                trick.delete()
+
+                messages.success(request,f"Saved Trick deleted! : {error}",'success')
+                return redirect('dashboard:my_saved_tricks')
+                    
+            except Exception as error:
+                messages.error(request,f"somthing went wrong! : {error}",'danger')
+                return redirect('dashboard:my_saved_tricks')
+
+        else:
+            messages.warning(request,"Please login first!",extra_tags='warning')
+            return redirect('home:home')

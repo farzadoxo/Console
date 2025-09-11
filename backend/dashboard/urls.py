@@ -8,5 +8,6 @@ urlpatterns = [
     path('my_saved_tricks/', Dash.get_user_saved_tricks, name='my_saved_tricks'),
     path('account/delete/',Dash.delete_account , name='delete_account'),
     path('delete_favorite_game/<int:game_id>/',Dash.delete_favorite_game , name='delete_favorite_game'),
+    path('delete_saved_trick/<int:trick_id>/',Dash.delete_saved_trick , name='delete_saved_trick')
 
 ]
