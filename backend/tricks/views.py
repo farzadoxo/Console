@@ -44,7 +44,7 @@ class Tricks:
             return render(request,'tricks_by.html',context={'tricks':tricks,'title':f"{creator.username}"})
         
         except ObjectDoesNotExist:
-            messages.error(request,"User Not Found!",extra_tags='error')
+            messages.error(request,"User Not Found!",extra_tags='danger')
             return redirect('home:home')
         
 
@@ -62,7 +62,7 @@ class Tricks:
 
 
     """ Modifying tricks """
-    def new_trick(request):
+    def new_trick(request,game_id:int):
         if request.method == 'POST':
             if request.user.is_authenticated:
                 form = NewTrickForm(request.POST)
@@ -71,7 +71,7 @@ class Tricks:
 
                     # get usefull data
                     cd = form.cleaned_data
-                    game = Game.objects.get(id=cd['game'])
+                    game = Game.objects.get(id=game_id)
                     creator = User.objects.get(id=request.user.id)
 
                     # create trick and save it
@@ -104,7 +104,7 @@ class Tricks:
         try:
             trick = Trick.objects.get(id=trick_id)
         except ObjectDoesNotExist:
-            messages.error(request,"Object not found !",extra_tags='error')
+            messages.error(request,"Object not found !",extra_tags='danger')
             return redirect('home:home')
         
         if request.user.is_authenticated:
@@ -128,7 +128,7 @@ class Tricks:
         try:
             trick = Trick.objects.get(id=trick_id)
         except ObjectDoesNotExist:
-            messages.error(request,"Trick doesn't exists!",extra_tags='error')
+            messages.error(request,"Trick doesn't exists!",extra_tags='danger')
             return redirect('home')
         
         if request.method == 'POST':
