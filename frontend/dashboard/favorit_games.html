@@ -5,7 +5,16 @@
 {% endblock %}
 
 {% block content %}
-    {% for i in fav_games %}
-        <h1>{{ i.game.title }}</h1>
+    {% for game in fav_games %}
+    <div class="game_card" style="width: 300px; height: 350px; border: 3px; border-style: dashed; border-color:violet; display:inline-block;">
+        <p>{{ game.game.title }}</p>
+        <p>Publisher : {{ game.game.publisher.name }}</p>
+        <p>ESRB : {{ game.game.esrb.sign }}</p>
+        <p>Release Date : {{ game.game.publishDate }}</p>
+        <p>Genere : {{ game.game.genre.title }}</p>
+        <a href="{% url 'games:game_info' game.game.id %}"><button type="button" class="btn btn-info">👁️</button></a>
+        <a href="{% url 'tricks:get_tricks_by_game' game.game.id %}"><button type="button" class="btn btn-warning">Tricks</button></a>
+        <a href="{% url 'dashboard:delete_favorite_game' game.game.id %}"><button type="button" class="btn btn-info">🗑️</button></a>
+    </div>
     {% endfor %}
 {% endblock %}
