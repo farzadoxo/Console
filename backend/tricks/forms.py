@@ -10,8 +10,6 @@ class NewTrickForm(forms.Form):
 
 
 class UpdateTrickForm(forms.Form):
-    # class Meta:
-    #     model = Trick
-    #     fields : 
-    title = forms.CharField(label="✍🏻 Title :")
-    description = forms.CharField(label="📝 Description :",widget=forms.Textarea({'rows':10 , 'cols':60}))
+    class Meta:
+        model = Trick
+        fields : '__all__'

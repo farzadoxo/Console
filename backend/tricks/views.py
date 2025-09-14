@@ -129,24 +129,24 @@ class Tricks:
             trick = Trick.objects.get(id=trick_id)
         except ObjectDoesNotExist:
             messages.error(request,"Trick doesn't exists!",extra_tags='danger')
-            return redirect('home')
+            return redirect('home:home')
         
         if request.method == 'POST':
             if request.user.is_authenticated:
                 if request.user.username == trick.creator.username:
-                    form = UpdateTrickForm(request.POST)
+                    form = UpdateTrickForm(request.POST, instance=trick)
 
                     if form.is_valid():
                         form.save()
                         messages.success(request,"Trick updated successfully !",extra_tags='success')
-                        return redirect('home')
+                        return redirect('home:home')
                 
                 else:
                     messages.warning(request,'You are not creator of this trick !',extra_tags='warning')
 
             else:
                 messages.warning(request,'Please login first !',extra_tags='warning')
-                return redirect('home')
+                return redirect('home:home')
             
         else:
             form = UpdateTrickForm(instance=trick)
