@@ -3,10 +3,9 @@ from config.init_db import init_db
 
 if __name__ == "__main__":
     try:
+        os.chdir(f'{os.getcwd()}/backend')
         init_db()
-        os.chdir(path=f'{os.getcwd()}')
-        print(os.getcwd())
-        os.system('python manage.py runserver')
+        os.system('python3 manage.py runserver')
         
     except Exception as error:
         print(f"ERROR >>>> : {error}")

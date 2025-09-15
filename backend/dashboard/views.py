@@ -38,6 +38,16 @@ class Dash:
             except Exception as error:
                 messages.error(request,"Somthing went wrong !",'danger')
                 return redirect('home:home')
+            
+    
+    def my_tricks(request):
+        if request.user.is_authenticated:
+            user_tricks = Trick.objects.filter(creator__id=request.user.id)
+            return render(request,'my_tricks.html',context={'tricks':user_tricks})
+        else:
+            messages.warning(request,"Please login first!",extra_tags='warning')
+            return redirect('home:home')
+
 
 
 
