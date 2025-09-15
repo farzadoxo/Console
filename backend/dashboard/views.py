@@ -185,16 +185,12 @@ class Dash:
 
     def delete_saved_trick(request,trick_id):
         if request.user.is_authenticated:
-            try:
-                trick = SavedTrick.objects.filter(user__id = request.user.id , trick__id = trick_id)
-                trick.delete()
 
-                messages.success(request,f"Saved Trick deleted! : {error}",'success')
-                return redirect('dashboard:my_saved_tricks')
-                    
-            except Exception as error:
-                messages.error(request,f"somthing went wrong! : {error}",'danger')
-                return redirect('dashboard:my_saved_tricks')
+            trick = SavedTrick.objects.filter(user__id = request.user.id , trick__id = trick_id)
+            trick.delete()
+
+            messages.success(request,f"Saved Trick deleted!",'success')
+            return redirect('dashboard:my_saved_tricks')
 
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')

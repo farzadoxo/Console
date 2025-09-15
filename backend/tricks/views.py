@@ -6,6 +6,7 @@ from .forms import NewTrickForm , UpdateTrickForm
 from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
+from dashboard.models import SavedTrick
 
 
 class Tricks:
@@ -109,10 +110,12 @@ class Tricks:
         
         if request.user.is_authenticated:
             if request.user.username == trick.creator.username:
+                saved = SavedTrick.objects.filter(trick__id = trick_id)
             # deleting trick
                 trick.delete()
+                saved.delete()
                 messages.info(request,f"{trick.title} deleted!",extra_tags='info')
-                return redirect('home')
+                return redirect('home:home')
             else:
                 messages.warning(request,"You are not creator of this trick!!",'warning')
                 return redirect('home:home')
