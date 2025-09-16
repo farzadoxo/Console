@@ -12,7 +12,7 @@
             <p>👤 By : {{ trick.trick.creator.username }}</p>
             <p>🎮 For : {{ trick.trick.game.title }}</p>
             <a href="{% url 'tricks:show_trick' trick.trick.id %}"><button type="button" class="btn btn-info">👁️</button></a>
-            <a href="{% url 'dashboard:delete_saved_trick' trick.trick.id %}"><button type="button" class="btn btn-info">🗑️</button></a>
+            <a href="{% url 'dashboard:delete_saved_trick' trick.trick.id %}"><button type="button" class="btn btn-danger">🗑️</button></a>
         </div>
     {% endfor %}
 {% endblock %}
