@@ -32,6 +32,7 @@
               </ul>
               {% if request.user.is_authenticated %}
                   <a href="{% url 'dashboard:my_profile' %}"><button type="button" class="btn btn-secondary">Profile</button></a>
+                  <h6>{{ request.user.username }}</h6>
                 {% else %}
                     <a href="{% url 'authentication:register' %}"><button type="button" class="btn btn-primary">Signup</button></a>
                     <a href="{% url 'authentication:login' %}"><button type="button" class="btn btn-success">Login</button></a>
