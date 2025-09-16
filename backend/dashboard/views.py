@@ -136,7 +136,7 @@ class Dash:
                 return redirect('dashboard:my_favorite_games')
                     
             except Exception as error:
-                messages.success(request,"somthing went wrong!",'danger')
+                messages.success(request,f"somthing went wrong! : {error}",'danger')
                 return redirect('dashboard:my_favorite_games')
         
         else:
@@ -185,13 +185,16 @@ class Dash:
 
     def delete_saved_trick(request,trick_id):
         if request.user.is_authenticated:
+            try:
+                trick = SavedTrick.objects.filter(user__id = request.user.id , trick__id = trick_id)
+                trick.delete()
 
-            trick = SavedTrick.objects.filter(user__id = request.user.id , trick__id = trick_id)
-            trick.delete()
+                messages.success(request,f"Saved Trick deleted!",'success')
+                return redirect('dashboard:my_saved_tricks')
 
-            messages.success(request,f"Saved Trick deleted!",'success')
-            return redirect('dashboard:my_saved_tricks')
-
+            except Exception as error:
+                messages.error(request,f"Somthing went wrong! : {error}",extra_tags='error')
+                return redirect('home:home')
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')
             return redirect('home:home')
