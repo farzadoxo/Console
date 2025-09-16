@@ -18,7 +18,7 @@ class Dash:
     """ User profile and account """
     def my_profile(request):
         if request.user.is_authenticated:
-            return render(request,'my_profile.html')
+            return render(request,'my_profile.html',context={'trick_count':Trick.objects.filter(creator__id = request.user.id).count()})
             
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')

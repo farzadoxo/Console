@@ -11,7 +11,7 @@
             <p>👤 By : {{ trick.creator.username }}</p>
             <p>🎮 For : {{ trick.game.title }}</p>
             <a href="{% url 'tricks:show_trick' trick.id %}"><button type="button" class="btn btn-info">Show</button></a>
-            <a href="{% url 'dashboard:add_saved_trick' trick.id %}"><button type="button" class="btn btn-info">📥</button></a>
+            <a href="{% url 'dashboard:add_saved_trick' trick.id %}"><button type="button" class="btn btn-success">📥</button></a>
         </div>
     {% endfor %}
 {% endblock %}

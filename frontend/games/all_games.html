@@ -15,6 +15,7 @@
         <p>Genere : {{ game.genre.title }}</p>
         <a href="{% url 'tricks:get_tricks_by_game' game.id %}"><button type="button" class="btn btn-warning">Tricks</button></a>
         <a href="{% url 'dashboard:add_favorite_game' game.id %}"><button type="button" class="btn btn-info">❤️</button></a>
+        <a href="{% url 'tricks:new_trick' game.id %}"><button type="button" class="btn btn-danger">➕</button></a>
     </div>
     {% endfor %}
 {% endblock %}
