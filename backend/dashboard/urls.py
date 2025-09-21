@@ -9,6 +9,9 @@ urlpatterns = [
     path('account/delete/',Dash.delete_account , name='delete_account'),
     path('delete_favorite_game/<int:game_id>/',Dash.delete_favorite_game , name='delete_favorite_game'),
     path('delete_saved_trick/<int:trick_id>/',Dash.delete_saved_trick , name='delete_saved_trick'),
-    path('my_tricks/',Dash.my_tricks,name='my_tricks')
+    path('my_tricks/',Dash.my_tricks,name='my_tricks'),
+    path('account/update-profile/',Dash.edit_user_profile,name='update_user_profile'),
+    path('account/update-account/',Dash.edit_user_account,name='update_user_account'),
+
 
 ]
