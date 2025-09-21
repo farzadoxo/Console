@@ -9,7 +9,8 @@ class NewTrickForm(forms.Form):
 
 
 
-class UpdateTrickForm(forms.Form):
+class UpdateTrickForm(forms.ModelForm):
     class Meta:
         model = Trick
-        fields : '__all__'
+        fields = ['title','description']
+

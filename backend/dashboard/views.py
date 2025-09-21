@@ -3,7 +3,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from tricks.models import Trick
-from .forms import UpdateUserAccount , UpdateUserProfile
+from .forms import UpdateUserAccount , UpdateUserProfile , UpdateUserAccount
 from games.models import Game
 from .models import FavoritGame , SavedTrick
 from django.contrib.auth import logout
@@ -23,6 +23,7 @@ class Dash:
         else:
             messages.warning(request,"Please login first!",extra_tags='warning')
             return redirect('home:home')
+
 
 
 
@@ -62,7 +63,7 @@ class Dash:
                     
         
 
-                    form = UpdateUserProfile(request.POST)
+                    form = UpdateUserProfile(request.POST,instance=user)
 
                     if form.is_valid():
                         user.first_name = form.FirstName
@@ -73,14 +74,40 @@ class Dash:
                 messages.warning(request,"Please login first!",extra_tags='warning')
                 return redirect('dashboard:my_prifile')
         else:
-            form = UpdateUserProfile()
+            form = UpdateUserProfile(instance=user)
         
         return render(request,'update_user_profile.html',context={'form':form})
     
 
 
+
+
     def edit_user_account(request):
-        ...
+        if request.user.is_authenticated:
+            if request.method == 'POST':
+                try:
+                    user = User.object.get(id=request.user.id)
+                except ObjectDoesNotExist:
+                    message.error(request,"User Doesn't exists!",extra_tags='warning')
+
+
+                form = UpdateUserAccount(request.POST,instance=user)
+                if form.is_valid():
+                    user.username = form.username
+                    user.email = form.email
+
+                    user.save()
+
+            else:
+                form = UpdateUserAccount(instance=user)
+
+
+        else:
+            message.warning(request,"Please login first!",extra_flags='warning')
+            return redirect('home:home')
+
+
+        return render(request,'update_user_account.html',contex={'form':form})
 
 
 

@@ -1,14 +1,23 @@
 from django import forms
+from django.contrib.auth.models import User
+
+
+class UpdateUserProfile(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['first_name','last_name']
 
 
 
-class UpdateUserProfile(forms.Form):
-    FirstName = forms.CharField()
-    LastName = forms.CharField()
+class UpdateUserAccount(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['username','email']
 
 
+class UpdatePassword(forms.ModelForm):
+    class Meta:
+        model = User
+        fields = ['password']
 
-class UpdateUserAccount(forms.Form):
-    UserName = forms.CharField()
-    Email = forms.EmailField()
     
