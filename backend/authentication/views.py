@@ -4,7 +4,8 @@ from .forms import UserRegisterForm , UserLoginForm
 from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth import login , authenticate , logout
-
+from django.core.exceptions import ObjectDoesNotExist
+from core.messages import MessageMaker
 
 
 class Auth:
@@ -12,27 +13,37 @@ class Auth:
     def register(request):
         if request.method == 'POST':
             form = UserRegisterForm(request.POST)
+
             if form.is_valid():
-                try:
-                    # Create and save user
-                    cd = form.cleaned_data
-                    user = User.objects.create_user(username=cd['UserName'], email =cd['Email'], password=cd['Password'])
-                    user.first_name = cd['FirstName']
-                    user.last_name = cd['LastName']
-                    user.save()
+
+                # Check user exist or not
+                if User.objects.filter(email=form.cleaned_data['Email']).count() == 0:
+                    if User.objects.filter(username=form.cleaned_data['UserName']).count() == 0:
+                        try:
+                            # Create and save user
+                            cd = form.cleaned_data
+                            user = User.objects.create_user(username=cd['UserName'], email =cd['Email'], password=cd['Password'])
+                            user.first_name = cd['FirstName']
+                            user.last_name = cd['LastName']
+                            user.save()
+                            
+                            # Show message and return 
+                            MessageMaker.Auth.user_registred_success(request,cd['UserName'])
+                            return redirect('home:home')
+                        
+                        except Exception as e:
+                            # Show ERROR and return
+                            MessageMaker.
+                            return redirect('authentication:register')
                     
-                    # Show message and return 
-                    messages.info(request,f"User {cd['UserName']} registered successfully!" , extra_tags='success')
-                    return redirect('home:home')
+                    else:
+                        messages.error(request,f"This username already taken. please try another one" , extra_tags='danger')
+                        return redirect('home:home')
                 
-                except Exception as e:
-                    # Show ERROR and return
-                    messages.error(request , "{}".format(e),extra_tags='danger')
-                    return redirect('authentication:register')
+                else:
+                    messages.error(request,f"this email is used befor by another person !" , extra_tags='danger')
+                    return redirect('home:home')
   
-            else:
-                messages.error(request , "Form is not valid !",extra_tags='warning')
-                return redirect('authentication:register')
         else:
             # Set request method to: GET
             form= UserRegisterForm()
