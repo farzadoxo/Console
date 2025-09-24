@@ -61,20 +61,21 @@ class Dash:
                 except ObjectDoesNotExist:
                     messages.error(request,"User doesn't exists!",extra_tags='error')
                     
-        
-
                     form = UpdateUserProfile(request.POST,instance=user)
 
                     if form.is_valid():
                         user.first_name = form.FirstName
                         user.last_name = form.LastName
 
-                        user.save()
+                        form.save()
+
+                        message.success(request,"Your profile info updated successfully !",'success')
+                        return redirect('home:home')
             else:
                 messages.warning(request,"Please login first!",extra_tags='warning')
                 return redirect('dashboard:my_prifile')
         else:
-            form = UpdateUserProfile(instance=user)
+            form = UpdateUserProfile()
         
         return render(request,'update_user_profile.html',context={'form':form})
     
