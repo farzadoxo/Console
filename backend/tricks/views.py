@@ -105,7 +105,7 @@ class Tricks:
         try:
             trick = Trick.objects.get(id=trick_id)
         except ObjectDoesNotExist:
-            messages.error(request,"Object not found !",extra_tags='danger')
+            messages.error(request,"Trick not found !",extra_tags='danger')
             return redirect('home:home')
         
         if request.user.is_authenticated:

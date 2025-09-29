@@ -20,6 +20,7 @@ class Auth:
                 if User.objects.filter(email=form.cleaned_data['Email']).count() == 0:
                     if User.objects.filter(username=form.cleaned_data['UserName']).count() == 0:
                         try:
+                            
                             # Create and save user
                             cd = form.cleaned_data
                             user = User.objects.create_user(username=cd['UserName'], email =cd['Email'], password=cd['Password'])
@@ -33,7 +34,7 @@ class Auth:
                         
                         except Exception as e:
                             # Show ERROR and return
-                            MessageMaker.
+                            MessageMaker.Core.error(request,e)
                             return redirect('authentication:register')
                     
                     else:
