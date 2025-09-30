@@ -5,7 +5,7 @@ from django.contrib import messages
 from django.http import HttpResponse
 from django.contrib.auth import login , authenticate , logout
 from django.core.exceptions import ObjectDoesNotExist
-from core.messages import MessageMaker
+from core.messages import MessageMaker as Message
 
 
 class Auth:
@@ -29,20 +29,20 @@ class Auth:
                             user.save()
                             
                             # Show message and return 
-                            MessageMaker.Auth.user_registred_success(request,cd['UserName'])
+                            Message.Auth.user_registred_success(request,cd['UserName'])
                             return redirect('home:home')
                         
                         except Exception as e:
                             # Show ERROR and return
-                            MessageMaker.Core.error(request,e)
+                            Message.Core.error(request,e)
                             return redirect('authentication:register')
                     
                     else:
-                        messages.error(request,f"This username already taken. please try another one" , extra_tags='danger')
+                        Message.Auth.username_taken(request)
                         return redirect('home:home')
                 
                 else:
-                    messages.error(request,f"this email is used befor by another person !" , extra_tags='danger')
+                    Message.Auth.email_used_before(request)
                     return redirect('home:home')
   
         else:
@@ -62,11 +62,11 @@ class Auth:
                 if user != None:
                     login(request,user)
 
-                    messages.success(request,f"Welcome dear {user.first_name} {user.last_name}" , extra_tags='success')
-
+                    Message.Auth.login_success(request)
                     return redirect('home:home')
+                
                 else:
-                    messages.error(request,"Your password or username is invalid !",extra_tags='danger')
+                    Message.Auth.pass_or_user_invalid(request)
                     return redirect('home:home')
                 
         else:
@@ -79,8 +79,8 @@ class Auth:
     def logout(request):
         if request.user.is_authenticated:
             logout(request)
-            messages.success(request,'User loged out successfully !',extra_tags='success')
+            Message.Auth.user_logedout(request)
             return redirect('home:home')
         else:
-            messages.error(request,"No one's loged in!",extra_tags='warning')
+            Message.Auth.no_one_logedin(request)
             return redirect('home:home')

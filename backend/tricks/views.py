@@ -68,7 +68,7 @@ class Tricks:
             if request.user.is_authenticated:
                 form = NewTrickForm(request.POST)
                 
-                if form.is_valid():
+                if form.is_valid(request):
 
                     # get usefull data
                     cd = form.cleaned_data
@@ -139,7 +139,7 @@ class Tricks:
                 if request.user.username == trick.creator.username:
                     form = UpdateTrickForm(request.POST, instance=trick)
 
-                    if form.is_valid():
+                    if form.is_valid(request):
                         form.save()
                         messages.success(request,"Trick updated successfully !",extra_tags='success')
                         return redirect('home:home')

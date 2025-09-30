@@ -4,24 +4,19 @@ from django.contrib import messages as django_message
 class MessageMaker:
 
     class Core:
-        
+
         def error(request,error_code):
             message =  django_message.error(request,f"Somthing went wrong! ERROR-CODE: {error_code}",extra_tags='danger')
             return message
 
         
-        def login_please():
-            message = django_message.success(self.request,"Please login first!",extra_tags='warning')
+        def login_please(request):
+            message = django_message.success(request,"Please login first!",extra_tags='warning')
             return message
 
 
 
     class Auth:
-        def __init__(request):
-            self.request = request
-
-
-
         def user_registred_success(request,username:str):
             message = django_message.success(request,f"User {username} registered successfully!",extra_tags='success')
             return message
@@ -55,54 +50,84 @@ class MessageMaker:
             return message
 
     class Games:
-        def __init__(request):
-            self.request = request
 
 
-
-
-        def genre_code_invalid():
-            message = django_message.error(self.request,"Genre code is invalid",extra_tags='danger')
+        def genre_code_invalid(request):
+            message = django_message.error(request,"Genre code is invalid",extra_tags='danger')
             return message
 
 
-        def publisher_code_invalid():
-            message = django_message.error(self.request,"Publisher code is invalid",extra_tags='danger')
+        def publisher_code_invalid(request):
+            message = django_message.error(request,"Publisher code is invalid",extra_tags='danger')
             return message
 
 
-        def esrb_code_invalid():
-            message = django_message.error(self.request,"ESRB sign is invalid",extra_tags='danger')
+        def esrb_code_invalid(request):
+            message = django_message.error(request,"ESRB sign is invalid",extra_tags='danger')
             return message
 
 
-        def game_does_not_exist():
-            message = django_message.error(self.request,"Game Doesn't exists!",extra_tags='danger')
+        def game_does_not_exist(request):
+            message = django_message.error(request,"Game Doesn't exists!",extra_tags='danger')
             return message
 
 
      
     class Trick:
-        def __init__(request):
-            self.request = request
 
-
-
-        def trick_created(game:str):
-            message = django_message.success(self.request,f"Trick successfully created for {game}",extra_tags='success')
+        def trick_created(request,game:str):
+            message = django_message.success(request,f"Trick successfully created for {game}",extra_tags='success')
             return message
         
 
     
 
     class Dash:
-        def __init__(request):
-            self.request = request
 
 
-
-        def user_not_found():
-            message = django_message.error(self.request,"User not found!",extra_tags='danger')
+        def user_not_found(request):
+            message = django_message.error(request,"User not found!",extra_tags='danger')
             return message
+
+
+        def account_deleted(request):
+            message = django_message.success(request,"Your account deleted!",extra_tags='success')
+            return message
+
+
+        def profile_updated(request):
+            message = django_message.success(request,"Your profile info updated successfully!",'success')
+            return message
+
+
+        def fav_game_added(request,title:str):
+            message = django_message(request,f"{title} added to your favorite games :)",'success')
+            return message
+
+
+        def fav_game_added_brfore(request):
+            message = django_message(request,"This games added to your favorite games before!!!",'warning')
+            return message
+
+
+        def fav_geme_deleted(request):
+            message = django_message(request,"Favorite game deleted!",'success')
+            return message
+
+        def trick_saved(request):
+            message = django_message(request,"Trick saved successfully",'success')
+            return message
+
+
+        def trick_saved_before(request):
+            message = django_message(request,"This trick saved before",'warning')
+            return message
+
+
+        def saved_trick_deleted(request):
+            message = django_message(request,"Saved trick deleted!",'success')
+            return message
+
+        
 
         

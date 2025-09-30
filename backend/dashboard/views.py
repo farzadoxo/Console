@@ -7,6 +7,8 @@ from .forms import UpdateUserAccount , UpdateUserProfile , UpdateUserAccount
 from games.models import Game
 from .models import FavoritGame , SavedTrick
 from django.contrib.auth import logout
+from core.messages import MessageMaker as Message
+
 
 class Dash:
     """"
@@ -21,7 +23,7 @@ class Dash:
             return render(request,'my_profile.html',context={'trick_count':Trick.objects.filter(creator__id = request.user.id).count()})
             
         else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
+            Message.Core.login_please(request)
             return redirect('home:home')
 
 
@@ -34,10 +36,11 @@ class Dash:
                 user.delete()
                 logout(request)
 
-                messages.success(request,"Your account deleted !",'success')
+                Message.Dash.account_deleted(request)
                 return redirect('home:home')
+            
             except Exception as error:
-                messages.error(request,"Somthing went wrong !",'danger')
+                Message.Core.error(request,error_code=error)
                 return redirect('home:home')
             
     
@@ -46,7 +49,7 @@ class Dash:
             user_tricks = Trick.objects.filter(creator__id=request.user.id)
             return render(request,'my_tricks.html',context={'tricks':user_tricks})
         else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
+            Message.Core.login_please(request)
             return redirect('home:home')
 
 
@@ -59,20 +62,21 @@ class Dash:
                 try:
                     user = User.objects.get(id=request.user.id)
                 except ObjectDoesNotExist:
-                    messages.error(request,"User doesn't exists!",extra_tags='error')
-                    
-                    form = UpdateUserProfile(request.POST,instance=user)
+                    Message.Dash.user_not_found(request)
+                    return redirect('home:home')
+                
+                form = UpdateUserProfile(request.POST,instance=user)
 
-                    if form.is_valid():
-                        user.first_name = form.FirstName
-                        user.last_name = form.LastName
+                if form.is_valid(request):
+                    user.first_name = form.FirstName
+                    user.last_name = form.LastName
 
-                        form.save()
+                    form.save()
 
-                        message.success(request,"Your profile info updated successfully !",'success')
-                        return redirect('home:home')
+                    Message.Dash.profile_updated(request)
+                    return redirect('home:home')
             else:
-                messages.warning(request,"Please login first!",extra_tags='warning')
+                Message.Core.login_please(request)
                 return redirect('dashboard:my_prifile')
         else:
             form = UpdateUserProfile()
@@ -89,11 +93,11 @@ class Dash:
                 try:
                     user = User.object.get(id=request.user.id)
                 except ObjectDoesNotExist:
-                    message.error(request,"User Doesn't exists!",extra_tags='warning')
+                    Message.Dash.user_not_found(request)
 
 
                 form = UpdateUserAccount(request.POST,instance=user)
-                if form.is_valid():
+                if form.is_valid(request):
                     user.username = form.username
                     user.email = form.email
 
@@ -104,7 +108,7 @@ class Dash:
 
 
         else:
-            message.warning(request,"Please login first!",extra_flags='warning')
+            Message.Core.login_please(request)
             return redirect('home:home')
 
 
@@ -127,7 +131,7 @@ class Dash:
             return render(request,'favorit_games.html',context={'fav_games':fav_games})
         
         else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
+            Message.Core.login_please(request)
             return redirect('home:home')
         
 
@@ -141,15 +145,15 @@ class Dash:
                 favorit_game = FavoritGame.objects.create(user=request.user ,game=game)
                 favorit_game.save()
 
-                messages.success(request,f"{game.title} added to your favorit games :)",extra_tags='success')
+                Message.Dash.fav_game_added(request,game.title)
                 return redirect('dashboard:my_favorite_games')
             
 
-            messages.success(request,"This game added to your favorite games befor!!!",extra_tags='warning')
+            Message.Dash.fav_game_added_brfore(request)
             return redirect('games:get_all_games')
  
         else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
+            Message.Core.login_please(request)
             return redirect('games:get_all_games')
         
 
@@ -160,15 +164,15 @@ class Dash:
                 game = FavoritGame.objects.filter(user__id = request.user.id , game__id = game_id)
                 game.delete()
                 
-                messages.success(request,"Favorite game deleted!",'success')
+                Message.Dash.fav_geme_deleted(request)
                 return redirect('dashboard:my_favorite_games')
                     
             except Exception as error:
-                messages.success(request,f"somthing went wrong! : {error}",'danger')
+                Message.Core.error(request,error)
                 return redirect('dashboard:my_favorite_games')
         
         else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
+            Message.Core.login_please(request)
             return redirect('home:home')
 
 
@@ -186,15 +190,15 @@ class Dash:
                 saved_trick = SavedTrick.objects.create(user=request.user , trick=trick)
                 saved_trick.save()
 
-                messages.success(request,"Trick saved successfully!",extra_tags="success")
+                Message.Dash.trick_saved(request)
                 return redirect('dashboard:my_saved_tricks')
             
 
-            messages.error(request,"This trick saved before!",extra_tags='warning')
+            Message.Dash.trick_saved_before(request)
             return redirect('tricks:get_all_tricks')
 
         else:
-            messages.warning(request,"Please login first!",extra_tags='danger')
+            Message.Core.login_please(request)
             return redirect('tricks:get_all_tricks')
 
 
@@ -206,7 +210,7 @@ class Dash:
             return render(request,'saved_tricks.html',context={'saved_tricks':saved_tricks})
 
         else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
+            Message.Core.login_please(request)
             return redirect('home:home')
             
 
@@ -217,12 +221,12 @@ class Dash:
                 trick = SavedTrick.objects.filter(user__id = request.user.id , trick__id = trick_id)
                 trick.delete()
 
-                messages.success(request,f"Saved Trick deleted!",'success')
+                Message.Dash.saved_trick_deleted(request)
                 return redirect('dashboard:my_saved_tricks')
 
             except Exception as error:
-                messages.error(request,f"Somthing went wrong! : {error}",extra_tags='error')
+                Message.Core.error(request,error)
                 return redirect('home:home')
         else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
+            Message.Core.login_please(request)
             return redirect('home:home')
