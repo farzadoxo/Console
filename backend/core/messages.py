@@ -62,7 +62,7 @@ class MessageMaker:
             return message
 
 
-        def esrb_code_invalid(request):
+        def esrb_sign_invalid(request):
             message = django_message.error(request,"ESRB sign is invalid",extra_tags='danger')
             return message
 
@@ -78,6 +78,24 @@ class MessageMaker:
         def trick_created(request,game:str):
             message = django_message.success(request,f"Trick successfully created for {game}",extra_tags='success')
             return message
+        
+
+        def trick_not_found(request):
+            message= django_message.error(request,"Trick doesn't exist!",'danger')
+            return message
+        
+        def trick_deleted(request):
+            message = django_message.success(request,"Trick deleted successfully!",'success')
+            return message
+        
+
+        def creator_wrong(request):
+            message = django_message.warning(request,"You are not the creator of this trick!",'warning')
+            return message
+        
+
+        def trick_updated(request):
+            message = django_message.success(request,"Trick updated !",'success')
         
 
     
