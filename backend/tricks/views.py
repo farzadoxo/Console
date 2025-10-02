@@ -7,6 +7,7 @@ from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist
 from datetime import datetime
 from dashboard.models import SavedTrick
+from core.messages import MessageMaker as Message
 
 
 class Tricks:
@@ -28,7 +29,7 @@ class Tricks:
         try:
             game = Game.objects.get(id=game_id)
         except ObjectDoesNotExist:
-            messages.error(request,"This game doesn't exists!",extra_tags='danger')
+            Message.Games.game_does_not_exist(request)
             return redirect('home:home')
         
         tricks = Trick.objects.filter(game__id = game.id)
@@ -45,7 +46,7 @@ class Tricks:
             return render(request,'tricks_by.html',context={'tricks':tricks,'title':f"{creator.username}"})
         
         except ObjectDoesNotExist:
-            messages.error(request,"User Not Found!",extra_tags='danger')
+            Message.Dash.user_not_found(request)
             return redirect('home:home')
         
 
@@ -84,11 +85,11 @@ class Tricks:
                     trick.save()
 
                     # show message and redirect to home
-                    messages.success(request,"Trick successfully created for {} Game!".format(game.title,creator.username))
+                    Message.Trick.trick_created(request,game=game.title)
                     return redirect('home:home')
             
             else:
-                messages.warning(request,"Please login first!",extra_tags='warning')
+                Message.Core.login_please(request)
                 return redirect('home:home')
 
         else:
@@ -105,7 +106,7 @@ class Tricks:
         try:
             trick = Trick.objects.get(id=trick_id)
         except ObjectDoesNotExist:
-            messages.error(request,"Trick not found !",extra_tags='danger')
+            Message.Trick.trick_not_found(request)
             return redirect('home:home')
         
         if request.user.is_authenticated:
@@ -114,13 +115,13 @@ class Tricks:
             # deleting trick
                 trick.delete()
                 saved.delete()
-                messages.info(request,f"{trick.title} deleted!",extra_tags='info')
+                Message.Trick.trick_deleted(request)
                 return redirect('home:home')
             else:
-                messages.warning(request,"You are not creator of this trick!!",'warning')
+                Message.Trick.creator_wrong(request)
                 return redirect('home:home')
         else:
-            messages.warning(request,"Please login first!",extra_tags='warning')
+            Message.Core.login_please(request)
             return redirect('home:home')
 
 
@@ -131,7 +132,7 @@ class Tricks:
         try:
             trick = Trick.objects.get(id=trick_id)
         except ObjectDoesNotExist:
-            messages.error(request,"Trick doesn't exists!",extra_tags='danger')
+            Message.Trick.trick_not_found(request)
             return redirect('home:home')
         
         if request.method == 'POST':
@@ -141,14 +142,14 @@ class Tricks:
 
                     if form.is_valid(request):
                         form.save()
-                        messages.success(request,"Trick updated successfully !",extra_tags='success')
+                        Message.Trick.trick_updated(request)
                         return redirect('home:home')
                 
                 else:
-                    messages.warning(request,'You are not creator of this trick !',extra_tags='warning')
+                    Message.Trick.creator_wrong(request)
 
             else:
-                messages.warning(request,'Please login first !',extra_tags='warning')
+                Message.Core.login_please(request)
                 return redirect('home:home')
             
         else:
