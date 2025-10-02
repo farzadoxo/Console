@@ -2,7 +2,7 @@ from django.shortcuts import render , redirect
 from .models import Game , Genre , Publisher , ESRB
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
-
+from core.messages import MessageMaker as Message
 
 
 class Games:
@@ -19,7 +19,7 @@ class Games:
         try:
             genre = Genre.objects.get(id=genre_id)
         except ObjectDoesNotExist:
-            messages.error(request,"Genre code is invalid !",extra_tags='danger')
+            Message.Games.genre_code_invalid(request)
             return redirect('home:home')
         
         games = Game.objects.filter(genre__id = genre.id)
@@ -32,7 +32,7 @@ class Games:
         try:
             publisher = Publisher.objects.get(id=publisher_id)
         except ObjectDoesNotExist:
-            messages.error(request,"Publisher code is invalid !",extra_tags='danger')
+            Message.Games.publisher_code_invalid(request)
             return redirect('home:home')
         
         games = Game.objects.filter(publisher__id = publisher.id)
@@ -45,7 +45,7 @@ class Games:
         try:
             esrb = ESRB.objects.get(sign=esrb_sign.upper())
         except ObjectDoesNotExist:
-            messages.error(request,"Esrb sign is invalid !",extra_tags='danger')
+            Message.Games.esrb_sign_invalid(request)
             return redirect('home:home')
         
         games = Game.objects.filter(esrb__id = esrb.id)
@@ -64,5 +64,11 @@ class Games:
 
     """ Action on games"""
     def game_info(request,game_id:int):
+        try:
+            game = Game.objects.get(id=game_id)
+        except ObjectDoesNotExist:
+            Message.Games.game_does_not_exist(request)
+            return redirect('games:get_all_games')
+        
         game = Game.objects.get(id=game_id)
         return render(request,'game_info.html', context={'game':game})
