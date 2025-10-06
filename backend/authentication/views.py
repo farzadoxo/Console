@@ -23,13 +23,13 @@ class Auth:
                             
                             # Create and save user
                             cd = form.cleaned_data
-                            user = User.objects.create_user(username=cd['UserName'], email =cd['Email'], password=cd['Password'])
-                            user.first_name = cd['FirstName']
-                            user.last_name = cd['LastName']
+                            user = User.objects.create_user(username=cd['username'], email =cd['email'], password=cd['password'])
+                            user.first_name = cd['firstname']
+                            user.last_name = cd['lastname']
                             user.save()
                             
                             # Show message and return 
-                            Message.Auth.user_registred_success(request,cd['UserName'])
+                            Message.Auth.user_registred_success(request,cd['username'])
                             return redirect('home:home')
                         
                         except Exception as e:
@@ -58,11 +58,11 @@ class Auth:
             form = UserLoginForm(request.POST)
             if form.is_valid():
                 cd = form.cleaned_data
-                user = authenticate(request,username=cd['UserName'] , password=cd['Password'])
+                user = authenticate(request,username=cd['username'] , password=cd['password'])
                 if user != None:
                     login(request,user)
 
-                    Message.Auth.login_success(request)
+                    Message.Auth.login_success(request,username=cd['username'])
                     return redirect('home:home')
                 
                 else:
