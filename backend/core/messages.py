@@ -48,6 +48,10 @@ class MessageMaker:
         def no_one_logedin(request):
             message = django_message.warning(request,"No one's loged in!",extra_tags='info')
             return message
+        
+        def password_invalid(request):
+            message = django_message.warning(request,"Password most be over 8 character!",extra_tags='warning')
+            return message
 
     class Games:
 
