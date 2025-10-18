@@ -40,8 +40,8 @@ class MessageMaker:
             return message
 
 
-        def user_logedout(request,first_name:str):
-            message = django_message.info(request,f"{first_name} loged out!",extra_tags='info')
+        def user_logedout(request):
+            message = django_message.info(request,"You'v been loged out!",extra_tags='info')
             return message
 
 
