@@ -26,6 +26,8 @@ urlpatterns = [
     path('auth/', include(('authentication.urls' , 'authentication') , namespace='authentication')),
     path('games/',include(('games.urls' , 'games'), namespace='games')),
     path('tricks/',include(('tricks.urls' , 'tricks') , namespace='tricks')),
-    path('dash/' , include(('dashboard.urls' , 'dashboard') , namespace='dashboard'))
+    path('dash/' , include(('dashboard.urls' , 'dashboard') , namespace='dashboard')),
+    path('platforms/',include(('platforms.urls','platforms') , namespace='platforms')),
+    path('publishers/',include(('publishers.urls','publishers') , namespace='publishers'))
 
 ]
