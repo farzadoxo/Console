@@ -10,7 +10,7 @@ def init_db(db_name: str = "db.sqlite3"):
     connection = sqlite3.connect(f'db.sqlite3')
     cursor = connection.cursor()
 
-    apps = ['games','tricks','dashboard']
+    apps = ['games','tricks','dashboard','publishers','platforms']
 
     os.chdir(f'../')
     for i in apps:
