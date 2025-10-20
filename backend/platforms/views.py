@@ -10,7 +10,7 @@ class Platforms:
     def get_all_platforms(request):
 
         platforms = Platform.objects.all()
-        return render(request,'all_platforms.html',contex={'platforms':platforms})
+        return render(request,'all_platforms.html',context={'platforms':platforms})
 
 
     def show_platform(request,Platform_id:str):
@@ -20,7 +20,7 @@ class Platforms:
             # TODO: some message 
             return redirect('home:home')
 
-        return render(request,'show_platform.html',contex={'platform':platform})
+        return render(request,'show_platform.html',context={'platform':platform})
 
 
 
