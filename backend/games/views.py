@@ -1,6 +1,6 @@
 from django.shortcuts import render , redirect
 from .models import Game , Genre , ESRB
-from publisher.models import Publisher
+from publishers.models import Publisher
 from django.core.exceptions import ObjectDoesNotExist
 from django.contrib import messages
 from core.messages import MessageMaker as Message
