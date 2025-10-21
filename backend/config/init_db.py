@@ -33,21 +33,22 @@ def init_db(db_name: str = "db.sqlite3"):
                                 ( 4 , 'Shooter'),
                                 ( 5 , 'Sports')""")
 
-        cursor.execute(f"""INSERT INTO games_publisher 
+        cursor.execute(f"""INSERT INTO publishers_publisher 
                         VALUES ( 1 , 'Rockstar Games' , '{datetime.datetime.now()}' , '/'),
                                 ( 2 , 'EA' , '{datetime.datetime.now()}' , '/'),
                                 ( 3 , 'Sony' , '{datetime.datetime.now()}' , '/'),
                                 ( 4 , 'Microsoft' , '{datetime.datetime.now()}' , '/'),
                                 ( 5 , 'Konami' , '{datetime.datetime.now()}' , '/')""")
 
-        cursor.execute(f"""INSERT INTO games_platform 
-                        VALUES ( 1 , 'Playstation5' , '{datetime.datetime.now()}' , '/' , 3),
-                                ( 2 , 'Xbox series X' , '{datetime.datetime.now()}' , '/' , 4)""")
+        cursor.execute(f"""INSERT INTO platforms_platform 
+                        VALUES ( 1 , 'Playstation5' , '{datetime.datetime.now()}' , 3 , 'This platform created by bill gates in 1998 and release in 2000' , '/'),
+                                ( 2 , 'Xbox series X' , '{datetime.datetime.now()}' , 4 , 'This gaming console created by sont co at japan' , '/')""")
         
 
         cursor.execute(f"""INSERT INTO games_game
                         VALUES ( 1 , 'Red dead redemption 2' , '{datetime.datetime.now()}' , '/' , 2 , 1 , 1),
                                 ( 2 , 'FC25' , '{datetime.datetime.now()}' ,'/' , 5 , 5 , 2)""")
+        
         
         cursor.connection.commit()
     
