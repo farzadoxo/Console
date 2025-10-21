@@ -153,3 +153,19 @@ class MessageMaker:
         
 
         
+
+    class Platforms:
+
+        def platform_does_not_exist(request):
+            message = django_message.error(request,"Platform doesn't exist!",'danger')
+            return message
+        
+
+
+
+
+    class Publishers:
+
+        def publisher_does_not_exist(request):
+            message = django_message.error(request,"Publisher doesn't exist!",'danger')
+            return message
