@@ -2,19 +2,17 @@
 {% extends 'base.html' %}
 
 {% block title %}
-    All Games
+    All Platforms
 {% endblock %}
 
 {% block content %}
     {% for plat in platforms %}
     <div class="platfoem_card" style="width: 300px; height: 350px; border: 3px; border-style: dashed; border-color:violet; display:inline-block;">
-        <p>{{ game.title }}</p>
+        <p>{{ plat.name }}</p>
         <p>Publisher : {{ plat.publisher.name }}</p>
-        <p>Release Date : {{ game.publishDate }}</p>
+        <p>Release Date : {{ plat.releaseDate }}</p>
         <p>About : {{ plat.about }}</p>
-        <a href="{% url 'tricks:get_tricks_by_game' game.id %}"><button type="button" class="btn btn-warning">Tricks</button></a>
-        <a href="{% url 'dashboard:add_favorite_game' game.id %}"><button type="button" class="btn btn-info">❤️</button></a>
-        <a href="{% url 'tricks:new_trick' game.id %}"><button type="button" class="btn btn-danger">➕</button></a>
+        <a href="{% url 'platforms:show_platform' plat.id %}"><button type="button" class="btn btn-info">More</button></a>
     </div>
     {% endfor %}
 {% endblock %}
