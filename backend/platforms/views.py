@@ -13,12 +13,12 @@ class Platforms:
         return render(request,'all_platforms.html',context={'platforms':platforms})
 
 
-    def show_platform(request,Platform_id:str):
+    def show_platform(request,platform_id:str):
         try:
-            platform = Platform.objects.get(id=Platform_id)
+            platform = Platform.objects.get(id=platform_id)
         except ObjectDoesNotExist:
-            # TODO: some message 
-            return redirect('home:home')
+            Message.Platforms.platform_does_not_exist(request)
+            return redirect('platforms:all')
 
         return render(request,'show_platform.html',context={'platform':platform})
 
