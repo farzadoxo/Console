@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block title %}
+    {{ platform.name }}
+{% endblock %}
+
+
+{% block content %}
+    <h3>Name : {{ platform.name }}</h3>
+    <h4>Publisher : {{ platform.publisher.name }}</h4>
+    <h4>ReleaseDate : {{ platform.releaseDate }}
+    <h4>About : {{ platform.about }}</h4>
+{% endblock %}
