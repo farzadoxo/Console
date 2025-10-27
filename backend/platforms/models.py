@@ -8,4 +8,4 @@ class Platform(models.Model):
     releaseDate = models.DateField()
     publisher = models.ForeignKey(Publisher , on_delete=models.CASCADE)
     about = models.CharField(max_length=2000)
-    picUrl = models.CharField(max_length=10)
+    picUrl = models.CharField(max_length=100)

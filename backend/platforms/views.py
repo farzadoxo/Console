@@ -24,6 +24,12 @@ class Platforms:
 
 
 
-            
-
-
+    def new_trick(request,plat_id:int):
+        try:
+            platform = Platform.objects.get(id=plat_id)
+        except ObjectDoesNotExist:
+            Message.Platforms.platform_does_not_exist(request)
+            return redirect('platforms:all')
+        
+        if request.method == 'POST':
+            ...
