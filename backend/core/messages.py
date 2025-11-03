@@ -161,6 +161,11 @@ class MessageMaker:
             return message
         
 
+        def platform_trick_created(request):
+            message = django_message.success(request,"Tricks successfully created!",'success')
+            return message
+        
+
 
 
 
