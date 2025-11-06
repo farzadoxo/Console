@@ -72,4 +72,4 @@ class Games:
             return redirect('games:get_all_games')
         
         game = Game.objects.get(id=game_id)
-        return render(request,'game_info.html', context={'game':game})
+        return render(request,'game_info.html', context={'game':game})  
