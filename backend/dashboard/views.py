@@ -150,11 +150,11 @@ class Dash:
             
 
             Message.Dash.fav_game_added_brfore(request)
-            return redirect('games:get_all_games')
+            return redirect('games:all')
  
         else:
             Message.Core.login_please(request)
-            return redirect('games:get_all_games')
+            return redirect('games:all')
         
 
 
