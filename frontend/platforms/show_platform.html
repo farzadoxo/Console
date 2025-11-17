@@ -6,11 +6,10 @@
 
 
 {% block content %}
-    {{ platform.picUrl }}
     {% load static %}
     <img src="{% static 'pic.jpg' %}" alt="pic">
     <h3>Name : {{ platform.name }}</h3>
     <h4>Publisher : {{ platform.publisher.name }}</h4>
     <h4>ReleaseDate : {{ platform.releaseDate }}
     <h4>About : {{ platform.about }}</h4>
-{% endblock %}
+{% endblock %}  
