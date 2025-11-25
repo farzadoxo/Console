@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'dashboard',
     'platforms',
     'publishers',
+    'rest_framework'
 ]
 
 MIDDLEWARE = [

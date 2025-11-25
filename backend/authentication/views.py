@@ -7,6 +7,8 @@ from django.contrib.auth import login , authenticate , logout
 from django.core.exceptions import ObjectDoesNotExist
 from core.messages import MessageMaker as Message
 from .extentions import password_checker
+from django.http import HttpResponse , JsonResponse
+from .serializers import UserSerializer
 
 
 class Auth:
