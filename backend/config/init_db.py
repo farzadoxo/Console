@@ -46,8 +46,8 @@ def init_db(db_name: str = "db.sqlite3"):
         
 
         cursor.execute(f"""INSERT INTO games_game
-                        VALUES ( 1 , 'Red dead redemption 2' , '{datetime.datetime.now()}' , '/' , 2 , 1),
-                                ( 2 , 'FC25' , '{datetime.datetime.now()}' ,'/' , 5 , 5)""")
+                        VALUES ( 1 , 'Red dead redemption 2' , '{datetime.datetime.now()}' , '/' , 2 , 1 , 1),
+                                ( 2 , 'FC25' , '{datetime.datetime.now()}' ,'/' , 5 , 2 , 5)""")
         
         
         cursor.connection.commit()
