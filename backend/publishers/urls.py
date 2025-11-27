@@ -1,8 +1,12 @@
-from django.urls import path
-from .views import Publishers
+from django.urls import path , include
+from rest_framework import routers
+from .views import PublisherViewSet
 
+router = routers.DefaultRouter()
+router.register('pub',PublisherViewSet,basename='pub')
 
 
 urlpatterns = [
-    path('all/',Publishers,name="get_all_publishers"),
+    path('',include(router.urls))
+    # path('all/',Publishers,name="get_all_publishers"),
 ]
