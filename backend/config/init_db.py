@@ -49,6 +49,10 @@ def init_db(db_name: str = "db.sqlite3"):
                         VALUES ( 1 , 'Red dead redemption 2' , '{datetime.datetime.now()}' , '/' , 2 , 1 , 1),
                                 ( 2 , 'FC25' , '{datetime.datetime.now()}' ,'/' , 5 , 2 , 5)""")
         
+
+        cursor.execute(f"""INSERT INTO tricks_trick
+                        VALUES ( 1 , 'how to play the rdr2' ,'sl;dkfsl;dfl;skdf;lks;ldkf;sldkf;ksdkf;;', '{datetime.datetime.now()}' , 1 , 1)""")
+        
         
         cursor.connection.commit()
     
