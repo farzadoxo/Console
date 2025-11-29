@@ -23,10 +23,10 @@ from django.urls import path , include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('',include(('home.urls' , 'home') , namespace='home')),
-    path('auth/', include(('authentication.urls' , 'authentication') , namespace='authentication')),
+    path('api/', include(('authentication.urls' , 'authentication') , namespace='authentication')),
     path('api/',include(('games.urls' , 'games'), namespace='games')),
     path('api/',include(('tricks.urls' , 'tricks') , namespace='tricks')),
-    path('dash/' , include(('dashboard.urls' , 'dashboard') , namespace='dashboard')),
+    path('api/' , include(('dashboard.urls' , 'dashboard') , namespace='dashboard')),
     path('api/',include(('platforms.urls','platforms') , namespace='platforms')),
     path('api/',include(('publishers.urls','publishers') , namespace='publishers'))
 
