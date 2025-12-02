@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 
 
 
-class UserSerializer(serializers.ModelSerializer):
+class UserRegisterSerializer(serializers.ModelSerializer):
 
 
     class Meta:
@@ -33,3 +33,16 @@ class UserSerializer(serializers.ModelSerializer):
         if len(value) < 8:
             raise serializers.ValidationError('Password must be over 8 character')
         return value
+
+
+
+class UserLoginSerializer(serializers.ModelSerializer):
+    class Meta:
+        model=User
+        fields = ['username','password']
+
+
+    def validate_username(serlf,value):
+        if User.objects.filter(username=value).exists():
+            return value
+        return serializers.ValidationError('User not found')
