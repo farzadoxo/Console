@@ -1,12 +1,5 @@
-from django.shortcuts import render , redirect
-from games.models import Game
+
 from .models import Trick
-from django.contrib import messages
-from .forms import NewTrickForm , UpdateTrickForm
-from django.contrib.auth.models import User
-from django.core.exceptions import ObjectDoesNotExist
-from datetime import datetime
-from dashboard.models import SavedTrick
 from core.messages import MessageMaker as Message
 from rest_framework.viewsets import ModelViewSet
 from .serializers import TrickSerializer
@@ -30,6 +23,8 @@ class TrickViewSet(ModelViewSet):
 
 
     def perform_create(self, serializer):
+        print("USER:", self.request.user)
+        print("AUTH:", self.request.auth)
         serializer.save(creator=self.request.user)
 
 
@@ -46,9 +41,6 @@ class TrickViewSet(ModelViewSet):
         return Response(serializer.data, status=status.HTTP_200_OK)
 
     
-
-
-
 
 
 # class Tricks:
