@@ -1,17 +1,6 @@
-from django.shortcuts import render , redirect
-from django.contrib.auth.models import User
-from .forms import UserRegisterForm , UserLoginForm
-from django.contrib import messages
-from django.http import HttpResponse
 from django.contrib.auth import login , authenticate , logout
-from django.core.exceptions import ObjectDoesNotExist
-from core.messages import MessageMaker as Message
-from .extentions import password_checker
-from django.http import HttpResponse , JsonResponse
 from .serializers import UserRegisterSerializer , UserLoginSerializer
 from rest_framework.views import APIView
-from rest_framework.authentication import BaseAuthentication , SessionAuthentication
-from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.authtoken.models import Token
