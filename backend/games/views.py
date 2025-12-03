@@ -1,4 +1,3 @@
-
 from .models import Game
 from rest_framework.viewsets import ReadOnlyModelViewSet
 from .serializers import GameSerializer

@@ -1,6 +1,4 @@
-
 from .models import Trick
-from core.messages import MessageMaker as Message
 from rest_framework.viewsets import ModelViewSet
 from .serializers import TrickSerializer
 from .models import Trick
