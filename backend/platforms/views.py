@@ -11,33 +11,3 @@ class PlatformViewSet(ReadOnlyModelViewSet):
     serializer_class = PlatformSerializer
     queryset = Platform.objects.all()
 
-
-
-# class Platforms:
-
-#     def get_all_platforms(request):
-
-#         platforms = Platform.objects.all()
-#         return render(request,'all_platforms.html',context={'platforms':platforms})
-
-
-#     def show_platform(request,platform_id:str):
-#         try:
-#             platform = Platform.objects.get(id=platform_id)
-#         except ObjectDoesNotExist:
-#             Message.Platforms.platform_does_not_exist(request)
-#             return redirect('platforms:all')
-
-#         return render(request,'show_platform.html',context={'platform':platform})
-
-
-
-#     def new_trick(request,plat_id:int):
-#         try:
-#             platform = Platform.objects.get(id=plat_id)
-#         except ObjectDoesNotExist:
-#             Message.Platforms.platform_does_not_exist(request)
-#             return redirect('platforms:all')
-        
-#         if request.method == 'POST':
-#             ...
