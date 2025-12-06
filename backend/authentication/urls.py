@@ -6,6 +6,4 @@ urlpatterns = [
         path('auth/register/', RegisterApiView.as_view() , name='register'),
         path('auth/login/',LoginApiView.as_view(),name='login'),
         path('auth/logout/',LogoutAPiView.as_view(),name='logout')
-        # path('login/',Auth.login , name='login'),
-        # path('logout/',Auth.logout , name='logout')
 ]
