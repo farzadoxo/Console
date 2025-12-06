@@ -8,5 +8,4 @@ router.register('pub',PublisherViewSet,basename='pub')
 
 urlpatterns = [
     path('',include(router.urls))
-    # path('all/',Publishers,name="get_all_publishers"),
 ]
