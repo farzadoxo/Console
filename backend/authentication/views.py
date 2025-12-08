@@ -30,8 +30,6 @@ class LoginApiView(APIView):
 
         user = authenticate(username=username, password=password)
 
-        print("AUTH USER:", user)
-
         if not user:
             return Response({"message":"User not found"}, status=status.HTTP_404_NOT_FOUND)
 
@@ -48,9 +46,3 @@ class LogoutAPiView(APIView):
 
         logout(request)
         return Response('User loged out',status=status.HTTP_200_OK)
-
-
-class AccountInfoApiView(APIView):
-    ...
-
-
