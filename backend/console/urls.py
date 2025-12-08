@@ -26,6 +26,7 @@ urlpatterns = [
     path('api/',include(('games.urls' , 'games'), namespace='games')),
     path('api/',include(('tricks.urls' , 'tricks') , namespace='tricks')),
     path('api/',include(('platforms.urls','platforms') , namespace='platforms')),
-    path('api/',include(('publishers.urls','publishers') , namespace='publishers'))
+    path('api/',include(('publishers.urls','publishers') , namespace='publishers')),
+    path('api/dash/',include(('dashboard.urls','dashboard') , namespace='dashboard'))
 
 ]
