@@ -7,6 +7,8 @@ from django.contrib.auth.models import User
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.permissions import IsAuthenticated
+from games.models import Game
+from games.serializers import GameSerializer
 
 
 
@@ -14,13 +16,11 @@ from rest_framework.permissions import IsAuthenticated
 class SavedTrickViewSet(ViewSet):
     permission_classes = [IsAuthenticated]
 
-
-
     def create(self,request):
-        serializer = SavedTrickSerializer(data=request.data)
+        serializer = SavedTrickSerializer(data=request.data,context={'request':request})
         if serializer.is_valid():
             serializer.save(user=request.user)
-            return Response(serializer.data , status=status.HTTP_200_OK)
+            return Response(serializer.data , status=status.HTTP_201_CREATED)
         return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
         
 
@@ -50,9 +50,33 @@ class SavedTrickViewSet(ViewSet):
 
 
 class FavoritGameViewSet(ModelViewSet):
-    serializer_class = FavoritGameSerializer
-    queryset = FavoritGame.objects.all()
+    permission_classes = [IsAuthenticated]
 
+
+    def create(self,request):
+        serializer = FavoritGameSerializer(data=request.data,context={'request':request})
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+
+            return Response(serializer.data,status=status.HTTP_201_CREATED)    
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+    
+
+    def list(self,request):
+        fa_games = FavoritGame.objects.filter(user = request.user)
+        serializer = FavoritGameSerializer(fa_games,many=True)
+
+        return Response(serializer.data,status=status.HTTP_200_OK)
+
+
+    def retrieve(self,request,pk):
+        fa_game = FavoritGame.objects.get(id=pk)
+        if fa_game.user.id == request.user.id:
+            game = Game.objects.get(id=fa_game.game.id)
+            serializer = GameSerializer(game)
+            return Response(serializer.data,status=status.HTTP_200_OK)
+        return Response("This favorite games is not for you!")
+    
 
     def update(self, request, *args, **kwargs):
         raise MethodNotAllowed('PUT')
