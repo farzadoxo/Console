@@ -46,4 +46,3 @@ class ProfileSerializer(ModelSerializer):
     class Meta:
         model = User
         fields = ['last_name','first_name']
-        
