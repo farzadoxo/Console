@@ -6,4 +6,3 @@ from .serializers import PlatformSerializer
 class PlatformViewSet(ReadOnlyModelViewSet):
     serializer_class = PlatformSerializer
     queryset = Platform.objects.all()
-

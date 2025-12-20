@@ -9,5 +9,3 @@ class TrickSerializer(ModelSerializer):
     class Meta:
         model = Trick
         fields = '__all__'
-
-        

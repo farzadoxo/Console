@@ -37,6 +37,3 @@ class TrickViewSet(ModelViewSet):
         tricks = Trick.objects.filter(creator__id=creator_id)
         serializer = TrickSerializer(tricks, many=True)
         return Response(serializer.data, status=status.HTTP_200_OK)
-
-    
-

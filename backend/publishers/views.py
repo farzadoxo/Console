@@ -8,5 +8,3 @@ from rest_framework.viewsets import ReadOnlyModelViewSet
 class PublisherViewSet(ReadOnlyModelViewSet):
     serializer_class = PublisherSerializer
     queryset = Publisher.objects.all()
-
-
