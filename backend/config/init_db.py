@@ -1,6 +1,9 @@
 import sqlite3
 import os
 import datetime
+# from django.apps import apps
+
+# print(f"APPS >>>>>>>>>>>>>>>>> {apps.get_models()}")
 
 def init_db(db_name: str = "db.sqlite3"):
     """Create the database and todos table if it doesn't already exist."""
