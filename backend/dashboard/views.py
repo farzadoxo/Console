@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet,ViewSet
 from rest_framework.views import APIView
-from .serializers import FavoritGameSerializer , SavedGameTrickSerializer , ProfileSerializer
-from .models import FavoritGame , SavedGameTrick
+from .serializers import FavoritGameSerializer , SavedGameTrickSerializer , SavedPlatformTrickSerializer, ProfileSerializer
+from .models import FavoritGame , SavedGameTrick , SavedPlatformTrick
 from rest_framework.exceptions import MethodNotAllowed
 from django.contrib.auth.models import User
 from rest_framework.response import Response
@@ -13,7 +13,7 @@ from games.serializers import GameSerializer
 
 
 
-class SavedTrickViewSet(ViewSet):
+class SavedGameTrickViewSet(ViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self,request):
@@ -45,6 +45,43 @@ class SavedTrickViewSet(ViewSet):
     
     def partial_update(self, request, *args, **kwargs):
         raise MethodNotAllowed('PATCH')
+
+
+
+
+class SavedPlatformTrickViewSet(ViewSet):
+    permission_classes = [IsAuthenticated]
+
+    def create(self,request):
+        serializer = SavedGameTrickSerializer(data=request.data,context={'request':request})
+        if serializer.is_valid():
+            serializer.save(user=request.user)
+            return Response(serializer.data , status=status.HTTP_201_CREATED)
+        return Response(serializer.errors,status=status.HTTP_400_BAD_REQUEST)
+        
+
+    def list(self,request):
+        saved = SavedPlatformTrick.objects.filter(user = request.user)
+        serializer = saved(saved,many=True)
+
+        return Response(serializer.data,status=status.HTTP_200_OK)
+    
+
+    def retrieve(self,request,pk):
+        trick = SavedPlatformTrick.objects.get(id=pk)
+        if trick.user.id == request.user.id:
+            serializer = SavedPlatformTrickSerializer(trick)
+
+            return Response(serializer.data , status=status.HTTP_200_OK)
+        return Response("This saved trick is not for you!",status=status.HTTP_400_BAD_REQUEST)
+
+
+    def update(self, request, *args, **kwargs):
+        raise MethodNotAllowed('PUT')
+    
+    def partial_update(self, request, *args, **kwargs):
+        raise MethodNotAllowed('PATCH')
+    
 
 
 

@@ -1,5 +1,5 @@
 from rest_framework.serializers import ModelSerializer
-from .models import FavoritGame , SavedGameTrick
+from .models import FavoritGame , SavedGameTrick , SavedPlatformTrick
 from django.contrib.auth.models import User
 from rest_framework.exceptions import ValidationError
 
@@ -34,6 +34,25 @@ class SavedGameTrickSerializer(ModelSerializer):
         trick = attrs.get('trick')
 
         if SavedGameTrick.objects.filter(user=user, trick=trick).exists():
+            raise ValidationError({
+                "trick": "This trick saved before!"
+            })
+
+        return attrs
+
+
+class SavedPlatformTrickSerializer(ModelSerializer):
+    class Meta:
+        model = SavedPlatformTrick
+        fields = '__all__'
+        read_only_fields = ('user',)
+
+    def validate(self, attrs):
+        request = self.context['request']
+        user = request.user
+        trick = attrs.get('trick')
+
+        if SavedPlatformTrick.objects.filter(user=user, trick=trick).exists():
             raise ValidationError({
                 "trick": "This trick saved before!"
             })
