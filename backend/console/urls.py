@@ -21,10 +21,11 @@ from django.contrib import admin
 from django.urls import path , include
 
 urlpatterns = [
-    path('admin/', admin.site.urls),
+    path('api-auth/', include('rest_framework.urls')),
+    path('admin/',admin.site.urls),
     path('api/', include(('authentication.urls' , 'authentication') , namespace='authentication')),
     path('api/',include(('games.urls' , 'games'), namespace='games')),
-    path('api/',include(('tricks.urls' , 'tricks') , namespace='tricks')),
+    path('api/tricks/',include(('tricks.urls' , 'tricks') , namespace='tricks')),
     path('api/',include(('platforms.urls','platforms') , namespace='platforms')),
     path('api/',include(('publishers.urls','publishers') , namespace='publishers')),
     path('api/dash/',include(('dashboard.urls','dashboard') , namespace='dashboard'))
