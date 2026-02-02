@@ -1,11 +1,11 @@
 from rest_framework.serializers import ModelSerializer , ReadOnlyField
-from .models import Trick
+from .models import GameTrick
 
 
 
-class TrickSerializer(ModelSerializer):
+class GameTrickSerializer(ModelSerializer):
     creator = ReadOnlyField(source='creator.id')
     
     class Meta:
-        model = Trick
+        model = GameTrick
         fields = '__all__'

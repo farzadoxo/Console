@@ -1,15 +1,15 @@
 from django.urls import path , include
-from .views import TrickViewSet
-from rest_framework.routers import DefaultRouter
+from .views import GameTrickViewSet
+from rest_framework.routers import DefaultRouter 
 
 
 
 
-router = DefaultRouter()
-router.register('tricks',TrickViewSet,basename='tricks')
+gametrick_router = DefaultRouter()
+gametrick_router.register('tricks',GameTrickViewSet,basename='tricks')
 
 
 urlpatterns = [
-    path('',include(router.urls))
+    path('',include(gametrick_router.urls))
     
 ]
