@@ -1,7 +1,7 @@
 from rest_framework.viewsets import ModelViewSet,ViewSet
 from rest_framework.views import APIView
-from .serializers import FavoritGameSerializer , SavedTrickSerializer , ProfileSerializer
-from .models import FavoritGame , SavedTrick
+from .serializers import FavoritGameSerializer , SavedGameTrickSerializer , ProfileSerializer
+from .models import FavoritGame , SavedGameTrick
 from rest_framework.exceptions import MethodNotAllowed
 from django.contrib.auth.models import User
 from rest_framework.response import Response
@@ -17,7 +17,7 @@ class SavedTrickViewSet(ViewSet):
     permission_classes = [IsAuthenticated]
 
     def create(self,request):
-        serializer = SavedTrickSerializer(data=request.data,context={'request':request})
+        serializer = SavedGameTrickSerializer(data=request.data,context={'request':request})
         if serializer.is_valid():
             serializer.save(user=request.user)
             return Response(serializer.data , status=status.HTTP_201_CREATED)
@@ -25,16 +25,16 @@ class SavedTrickViewSet(ViewSet):
         
 
     def list(self,request):
-        saved = SavedTrick.objects.filter(user = request.user)
-        serializer = SavedTrickSerializer(saved,many=True)
+        saved = SavedGameTrick.objects.filter(user = request.user)
+        serializer = SavedGameTrickSerializer(saved,many=True)
 
         return Response(serializer.data,status=status.HTTP_200_OK)
     
 
     def retrieve(self,request,pk):
-        trick = SavedTrick.objects.get(id=pk)
+        trick = SavedGameTrick.objects.get(id=pk)
         if trick.user.id == request.user.id:
-            serializer = SavedTrickSerializer(trick)
+            serializer = SavedGameTrickSerializer(trick)
 
             return Response(serializer.data , status=status.HTTP_200_OK)
         return Response("This saved trick is not for you!",status=status.HTTP_400_BAD_REQUEST)
