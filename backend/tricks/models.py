@@ -19,4 +19,4 @@ class PlatformTrick(models.Model):
     description = models.CharField(max_length=5000)
     platform = models.ForeignKey(Platform , on_delete=models.CASCADE)
     creator = models.ForeignKey(User, on_delete=models.CASCADE)
-    createdAt = models.DateTimeField(auto_created=True)
+    createdAt = models.DateTimeField(auto_now_add=True)

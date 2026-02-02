@@ -6,13 +6,13 @@ from rest_framework.routers import DefaultRouter
 
 
 gametrick_router = DefaultRouter()
-gametrick_router.register('tricks',GameTrickViewSet,basename='tricks')
+gametrick_router.register('games',GameTrickViewSet,basename='game-tricks')
 
 platformtrick_router = DefaultRouter()
-platformtrick_router.register('tricks',PlatformTrickViewSet,basename='tricks')
+platformtrick_router.register('platforms',PlatformTrickViewSet,basename='platform-tricks')
 
 urlpatterns = [
-    path('games/',include(gametrick_router.urls)),
-    path('platforms/',include(platformtrick_router.urls))
-    
-]
+    path('',include(gametrick_router.urls)),
+    path('',include(platformtrick_router.urls))
+      
+]   

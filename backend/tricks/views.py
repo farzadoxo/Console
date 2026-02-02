@@ -48,8 +48,8 @@ class PlatformTrickViewSet(ModelViewSet):
 
     def get_permissions(self):
         if self.action == 'create':
-            return [IsAuthenticated]
-        return [AllowAny]
+            return [IsAuthenticated()]
+        return [AllowAny()]
     
     def perform_create(self, serializer):
         print("USER:", self.request.user)
