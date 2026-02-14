@@ -28,6 +28,8 @@ urlpatterns = [
     path('api/tricks/',include(('tricks.urls' , 'tricks') , namespace='tricks')),
     path('api/',include(('platforms.urls','platforms') , namespace='platforms')),
     path('api/',include(('publishers.urls','publishers') , namespace='publishers')),
-    path('api/dash/',include(('dashboard.urls','dashboard') , namespace='dashboard'))
+    path('api/dash/',include(('dashboard.urls','dashboard') , namespace='dashboard')),
+    path('api/wallpapers/',include(('wallpapers.urls','wallpapers'),namespace='wallpapers')),
+    path('api/theme-songs/',include(('theme_songs.urls','theme_songs'),namespace='theme_songs'))
 
 ]

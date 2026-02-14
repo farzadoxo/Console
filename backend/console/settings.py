@@ -43,6 +43,8 @@ INSTALLED_APPS = [
     'dashboard',
     'platforms',
     'publishers',
+    'wallpapers',
+    'theme_songs',
     'rest_framework',
     'rest_framework.authtoken'
 ]
