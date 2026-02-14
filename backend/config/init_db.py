@@ -13,7 +13,7 @@ def init_db(db_name: str = "db.sqlite3"):
     connection = sqlite3.connect(f'db.sqlite3')
     cursor = connection.cursor()
 
-    apps = ['games','tricks','dashboard','publishers','platforms']
+    apps = ['games','tricks','dashboard','publishers','platforms','wallpapers','theme_songs']
 
     os.chdir(f'../')
     for i in apps:
@@ -59,6 +59,18 @@ def init_db(db_name: str = "db.sqlite3"):
         
         cursor.execute(f"""INSERT INTO tricks_platformtrick (id , title , description , createdAt ,platform_id , creator_id)
                         VALUES ( 1 , 'how to install game on ps5' ,'sl;dkfsl;dfl;skdf;lks;ldkf;sldkf;ksdkf;;', '{datetime.datetime.now()}' , 1 , 1)""")
+
+
+        cursor.execute(f"""INSERT INTO wallpapers_gamewallpaper (id , game_id , pic_url)
+                       VALUES (1 , 1 , '/')""")
+
+
+        cursor.execute(f"""INSERT INTO wallpapers_platformwallpaper (id , platform_id , pic_url)
+                       VALUES (1 , 1 , '/')""")
+        
+
+        cursor.execute(f"""INSERT INTO theme_songs_gamethemesong (id , game_id , song_url)
+                       VALUES (1 , 1 , '/')""")
         
         
         cursor.connection.commit()
