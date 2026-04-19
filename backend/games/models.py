@@ -14,6 +14,7 @@ class ESRB(models.Model):
 
 
 
+
 class Game(models.Model):
     title = models.CharField(max_length=30)
     publisher = models.ForeignKey(Publisher , on_delete=models.CASCADE)
@@ -21,3 +22,11 @@ class Game(models.Model):
     genre = models.ForeignKey(Genre , on_delete=models.CASCADE)
     esrb = models.ForeignKey(ESRB , on_delete=models.CASCADE)
     iconUrl = models.CharField(max_length=100)
+
+
+
+
+class Exprience(models.Model):
+    rate = models.IntegerField()
+    descreption = models.CharField(max_length=200)
+    game = models.ForeignKey(Game,on_delete=models.CASCADE)
